@@ -6,7 +6,13 @@ public class Record {
     int id;
     String cookie;
     String building;
+    String mode;
     Date date;
+
+    public Record(){
+        date = new Date();
+        mode = "normal";
+    }
 
     @Override
     public String toString() {
@@ -14,8 +20,17 @@ public class Record {
                 "id=" + id +
                 ", cookie='" + cookie + '\'' +
                 ", building='" + building + '\'' +
+                ", mode='" + mode + '\'' +
                 ", date=" + date +
                 '}';
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 
     public int getId() {

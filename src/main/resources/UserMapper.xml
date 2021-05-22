@@ -16,7 +16,7 @@
     </insert>
 
     <insert id="addRecord" parameterType="com.xWash.entity.Record">
-        insert into record(cookie,building,date)values(#{cookie},#{building},#{date})
+        insert into record(cookie,building,date,mode)values(#{cookie},#{building},#{date},#{mode})
     </insert>
 
 

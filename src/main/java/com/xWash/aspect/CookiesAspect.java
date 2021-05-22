@@ -21,8 +21,9 @@ public class CookiesAspect {
     private void pt4checkController() {
     }
 
-    @Before("pt4checkController() && args(building,userCookieStr,*,response,..)")
-    private void beforeCheck(String building, String userCookieStr, HttpServletResponse response) {
+    @Before("pt4checkController() && args(building,autoUpdate,userCookieStr,*,response,..)")
+    private void beforeCheck(String building,String autoUpdate, String userCookieStr
+            , HttpServletResponse response) {
         ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
         UserDao userDao = (UserDao) ac.getBean("userMapper");
         Cookie userCookie;
@@ -33,6 +34,7 @@ public class CookiesAspect {
             } while (userDao.getUserByCookie(userCookieStr) != null);
             userCookie = new Cookie("user", userCookieStr);
             userCookie.setMaxAge(60 * 60 * 24 * 365 * 4);
+            userCookie.setPath("/");
             response.addCookie(userCookie);
             userDao.addUser(userCookieStr);
         }
@@ -40,7 +42,8 @@ public class CookiesAspect {
         Record record = new Record();
         record.setBuilding(building);
         record.setCookie(userCookieStr);
-        record.setDate(new Date());
+        if (autoUpdate!=null)
+            record.setMode("autoUpdate");
         userDao.addRecord(record);
     }
 }

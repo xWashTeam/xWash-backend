@@ -37,7 +37,9 @@ public class CheckController {
 
     @RequestMapping(path="/{building}")
     @ResponseBody
-    public APIResult getMachineStatus(@PathVariable(name="building")String building,@CookieValue(value = "user",defaultValue = "")String userCookie
+    public APIResult getMachineStatus(@PathVariable(name="building")String building
+            , String autoUpdate // 前端自动更新请求标识
+            , @CookieValue(value = "user",defaultValue = "")String userCookie
             , HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
         ModelAndView mv = new ModelAndView();
         String jsonStr = redisUtil.getStr_Str(building);
