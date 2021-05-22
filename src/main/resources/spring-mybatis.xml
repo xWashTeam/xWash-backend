@@ -50,9 +50,14 @@
 
     </bean>
 
-    <!--配置userMapper对象-->
+    <!--配置feedbackMapper对象-->
     <bean id="feedbackMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="mapperInterface" value="com.xWash.dao.FeedbackDao"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+    <!--配置userMapper对象-->
+    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.xWash.dao.UserDao"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
