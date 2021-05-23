@@ -29,16 +29,16 @@
 
 
     <!--数据库连接池-->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" scope="singleton">
         <property name="driverClass" value="${jdbc.driver}"/>
         <property name="jdbcUrl" value="${jdbc.url}"/>
         <property name="user" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
         <!-- 初始连接池大小 -->
-        <property name="initialPoolSize" value="10"/>
+        <property name="initialPoolSize" value="5"/>
         <!-- 连接池中连接最小个数 -->
-        <property name="minPoolSize" value="5"/>
-        <property name="maxPoolSize" value="20"/>
+        <property name="minPoolSize" value="2"/>
+        <property name="maxPoolSize" value="10"/>
     </bean>
 
 
