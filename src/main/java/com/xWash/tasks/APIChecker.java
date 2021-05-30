@@ -46,11 +46,6 @@ public class APIChecker {
                 buildingFiles) {
             LinkedHashMap<String, QueryResult> result = distributor.queryByFile(file);
 
-//            for (String key :
-//                    result.keySet()) {
-//                System.out.println("[APIChecker] QueryResult -> "+ result.get(key).toString());
-//            }
-
             // 遍历结果集
             if (result != null) {
                 StringBuilder resultStr = new StringBuilder("");
