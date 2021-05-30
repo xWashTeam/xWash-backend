@@ -1,4 +1,5 @@
 package com.xWash.service.Impl;
+import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.*;
 import com.xWash.service.IChecker;
@@ -9,17 +10,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class UCleanChecker implements IChecker{
 
-    private int timeout = 5000;
+    private int timeout = 2000;
     private String hostUrl = "https://u.zhinengxiyifang.cn/api/Devices";
     private String para1="?filter={\"where\":{\"qrCode\":\"";
     private String para2="\",\"isRemoved\":false},\"scope\":{\"fields\":[\"virtualId\",\"scanSelfClean\",\"hasAutoLaunchDevice\",\"autoLaunchDeviceOutOfStock\",\"isSlotMachine\",\"deviceTypeId\",\"online\",\"status\",\"boxTypeId\",\"sn\"]},\"include\":[{\"relation\":\"store\",\"scope\":{\"fields\":[\"isRemoved\",\"enable\"]}}]}";
 
-    public QueryResult checkByQrLink(String qrLink) {
+    public QueryResult checkByQrLink(String qrLink) throws HttpException {
         return checkByUrl(hostUrl + para1+qrLink+para2);
     }
 
-
-    private QueryResult checkByUrl(String url) {
+    private QueryResult checkByUrl(String url) throws HttpException {
         String response = HttpUtil.get(url,timeout);
         return dealWithResponse(response);
     }

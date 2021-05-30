@@ -8,6 +8,11 @@ public class QueryResult implements Serializable {
     private int remainTime=0;
     private String location="";
     private String message = "";
+    private static final QueryResult emptyInstance = new QueryResult();
+
+    public static QueryResult getEmptyInstance(){
+        return emptyInstance;
+    }
 
     public void setAll(String name, MStatus status, int remainTime, String message) {
         this.name = name;
@@ -16,6 +21,8 @@ public class QueryResult implements Serializable {
         this.message = message;
 
     }
+
+
 
     @Override
     public String toString() {

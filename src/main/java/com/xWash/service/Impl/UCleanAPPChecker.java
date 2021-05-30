@@ -1,5 +1,6 @@
 package com.xWash.service.Impl;
 
+import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -10,11 +11,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UCleanAPPChecker implements IChecker {
-    private int timeout = 5000;
+    private int timeout = 2000;
     private String host = "https://phoenix.ujing.online:443/api/v1/devices/scanWasherCode";
     private String Authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA2NjM4NDIsIm5hbWUiOiIxMzAyNTE2MDAzNiIsImFwcFVzZXJJZCI6MTI2OTcxNzksImlhdCI6MTYyMDk4NjE3MywiZXhwIjoxNjI5MDIxMzczfQ.TJvITEHADsLSBCvzyxtdhYOLrsIx4mTVDsB_ewS0-B8";
 
-    private String getResponse(String qrLink){
+    private String getResponse(String qrLink) throws HttpException {
         JSONObject jo = new JSONObject();
         jo.putOnce("qrCode",qrLink);
         return HttpRequest.post(host).timeout(timeout).header("Authorization",Authorization).body(String.valueOf(jo))
@@ -22,7 +23,7 @@ public class UCleanAPPChecker implements IChecker {
     }
 
     @Override
-    public QueryResult checkByQrLink(String qrLink) {
+    public QueryResult checkByQrLink(String qrLink) throws HttpException {
         JSONObject resJson = JSONUtil.parseObj(getResponse(qrLink));
         return dealWithResponse(resJson);
     }
