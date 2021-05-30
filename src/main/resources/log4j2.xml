@@ -1,0 +1,44 @@
+<Configuration status="WARN" monitorInterval="300">
+    <properties>
+        <property name="LOG_HOME">/home/kael/logs/</property>
+    </properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <RollingRandomAccessFile name="checkFile"
+                                 fileName="${LOG_HOME}/CheckLog.log"
+                                 filePattern="${LOG_HOME}/check/$${date:yyyy-MM}/CheckLog-%d{yyyy-MM-dd HH-mm}-%i.log">
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} \n %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1440" />
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingRandomAccessFile>
+        <RollingRandomAccessFile name="sqlFile"
+                                 fileName="${LOG_HOME}/sqlLog.log"
+                                 filePattern="${LOG_HOME}/sql/$${date:yyyy-MM}/sqlLog-%d{yyyy-MM-dd HH-mm}-%i.log">
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} \n %msg%n" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1440" />
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="20" />
+        </RollingRandomAccessFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="checkerLog" level="warn" additivity="false">
+            <AppenderRef ref="checkFile" />
+        </Logger>
+        <Logger name="sqlLog" level="info" additivity="false">
+            <AppenderRef ref="sqlFile" />
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="Console" />
+        </Root>
+    </Loggers>
+</Configuration>
