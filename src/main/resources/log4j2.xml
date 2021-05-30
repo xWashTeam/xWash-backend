@@ -1,6 +1,6 @@
 <Configuration status="WARN" monitorInterval="300">
     <properties>
-        <property name="LOG_HOME">/home/kael/logs/</property>
+        <property name="LOG_HOME">${sys:user.home}/logs/</property>
     </properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
