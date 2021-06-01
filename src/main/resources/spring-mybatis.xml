@@ -39,6 +39,8 @@
         <!-- 连接池中连接最小个数 -->
         <property name="minPoolSize" value="2"/>
         <property name="maxPoolSize" value="10"/>
+        <!-- 获取连接超时时间 -->
+        <property name="checkoutTimeout" value="7200" />
     </bean>
 
 
