@@ -7,8 +7,8 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
         </Console>
         <RollingRandomAccessFile name="checkFile"
-                                 fileName="${LOG_HOME}/CheckLog.log"
-                                 filePattern="${LOG_HOME}/check/$${date:yyyy-MM}/CheckLog-%d{yyyy-MM-dd HH-mm}-%i.log">
+                                 fileName="${LOG_HOME}/checkLog.log"
+                                 filePattern="${LOG_HOME}/check/$${date:yyyy-MM}/checkLog-%d{yyyy-MM-dd HH-mm}-%i.log">
             <PatternLayout
                     pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} \n %msg%n" />
             <Policies>
@@ -17,6 +17,7 @@
             </Policies>
             <DefaultRolloverStrategy max="20" />
         </RollingRandomAccessFile>
+
         <RollingRandomAccessFile name="sqlFile"
                                  fileName="${LOG_HOME}/sqlLog.log"
                                  filePattern="${LOG_HOME}/sql/$${date:yyyy-MM}/sqlLog-%d{yyyy-MM-dd HH-mm}-%i.log">
