@@ -62,5 +62,10 @@
         <property name="mapperInterface" value="com.xWash.dao.UserDao"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
+    <!--配置BuildingMapper对象-->
+    <bean id="buildingMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.xWash.dao.BuildingMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
 
 </beans>
