@@ -6,10 +6,10 @@ import com.xWash.entity.QueryResult;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public interface IDistributor {
-    HashMap<String, QueryResult> queryByPath(String path);
-    HashMap<String, QueryResult> queryByFile(File file);
-    HashMap<String, QueryResult> queryByJsonString(String jsonStr);
-    HashMap<String, QueryResult> queryByJsonObject(JSONObject json);
+    ConcurrentHashMap<String, QueryResult> queryByJsonString(String name, String jsonStr);
+    ConcurrentHashMap<String, QueryResult> queryByJsonObject(String name, JSONObject json);
 }

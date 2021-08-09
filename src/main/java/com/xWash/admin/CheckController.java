@@ -1,12 +1,14 @@
 package com.xWash.admin;
 
 
+import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.xWash.entity.APIResult;
 import com.xWash.entity.QueryResult;
 import com.xWash.service.Impl.Distributor;
 import com.xWash.util.BuildingFileUtil;
+import com.xWash.util.ComparatorsUtil;
 import com.xWash.util.RedisUtil;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -24,33 +26,40 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
-@RequestMapping(path="/api",method = {RequestMethod.GET,RequestMethod.POST})
+@RequestMapping(path = "/api", method = {RequestMethod.GET, RequestMethod.POST})
 public class CheckController {
 
 
-    @Autowired Distributor distributor;
+    @Autowired
+    Distributor distributor;
     @Autowired
     RedisUtil redisUtil;
 
-    @RequestMapping(path="/{building}")
+    @RequestMapping(path = "/{building}")
     @ResponseBody
-    public APIResult getMachineStatus(@PathVariable(name="building")String building
+    public APIResult getMachineStatus(@PathVariable(name = "building") String building
             , String autoUpdate // 前端自动更新请求标识
-            , @CookieValue(value = "user",defaultValue = "")String userCookie
+            , @CookieValue(value = "user", defaultValue = "") String userCookie
             , HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
         ModelAndView mv = new ModelAndView();
-        String jsonStr = redisUtil.getStr_Str(building);
-        JSONObject resJson = JSONUtil.parseObj(jsonStr,false,true);
-        if (jsonStr == null || jsonStr.equals("")){
-            session.setAttribute("msg","没有找到"+building);
+        if (!redisUtil.hashExist(building)) {
+            session.setAttribute("msg", "没有找到" + building);
             response.sendError(404);
             mv.setViewName("404");
-        }else{
-            mv.setViewName("api");
+            return APIResult.createOnlyCode(404);
         }
-        return APIResult.createWithData(200,resJson);
+        Map<String, QueryResult> map = redisUtil.hashGetAll(building);
+        JSONObject resJson = new JSONObject(true);
+        map.entrySet().stream()
+                .sorted(ComparatorsUtil.getComparator(building))
+                .forEach(entry->{
+                    resJson.set(entry.getKey(),entry.getValue().toJson());
+                });
+        mv.setViewName("api");
+        return APIResult.createWithData(200, resJson);
     }
 }

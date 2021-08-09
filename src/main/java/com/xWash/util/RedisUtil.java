@@ -1,16 +1,22 @@
 package com.xWash.util;
 
 import com.xWash.Exception.RedisException;
+import com.xWash.entity.QueryResult;
 import com.xWash.service.Impl.UCleanChecker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.hash.HashMapper;
+import org.springframework.data.redis.hash.ObjectHashMapper;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
+import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class RedisUtil {
@@ -18,30 +24,36 @@ public class RedisUtil {
     @Autowired
     Jedis jedis;
     @Autowired
-    RedisTemplate<String, Integer> rtInt;
-    @Autowired
-    RedisTemplate<String, String> rtStr;
+    @Resource(name = "redisTemplate")
+    private RedisTemplate<String, String> redisTemplate;
 
-    public void setStr_Int(String key,int value){
-        // TODO logging
-        ValueOperations<String, Integer> vo = rtInt.opsForValue();
-        vo.set(key,value);
+    public boolean hashExist(String key){
+        return redisTemplate.hasKey(key);
+    }
+
+    public Map hashGetAll(String key){
+        return  redisTemplate.opsForHash().entries(key);
+    }
+
+    public String hashGet(String key, String field){
+        return (String) redisTemplate.opsForHash().get(key,field);
+    }
+
+    public void hashSet(String key, String field, QueryResult value){
+        redisTemplate.opsForHash().put(key, field, value);
     }
 
     public void setStr_Str(String key, String value){
-        ValueOperations<String, String> vo = rtStr.opsForValue();
+        ValueOperations<String, String> vo = redisTemplate.opsForValue();
         vo.set(key,value);
     }
 
     public String getStr_Str(String key){
-        ValueOperations<String , String > vo = rtStr.opsForValue();
+        ValueOperations<String , String > vo = redisTemplate.opsForValue();
         return vo.get(key);
     }
 
-    public Integer getStr_Int(String key){
-        ValueOperations<String , Integer > vo = rtInt.opsForValue();
-        return vo.get(key);
-    }
+
 
     public static String decodeUTF8Str(String xStr) throws UnsupportedEncodingException {
         return URLDecoder.decode(xStr.replaceAll("\\\\x", "%"), "utf-8");
