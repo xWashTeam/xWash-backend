@@ -32,7 +32,7 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="checkerLog" level="warn" additivity="false">
+        <Logger name="checkerLog" level="info" additivity="false">
             <AppenderRef ref="checkFile" />
         </Logger>
         <Logger name="sqlLog" level="info" additivity="false">
