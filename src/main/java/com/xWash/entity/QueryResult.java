@@ -1,28 +1,27 @@
 package com.xWash.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class QueryResult implements Serializable {
+    private static final Date initDate = new Date(1);   // 用于表示没有成功更新状态
+    private static final QueryResult emptyInstance = new QueryResult();
+
     private String name="";
-    private MStatus status=MStatus.AVAILABLE;
+    private MStatus status=MStatus.INIT;
     private int remainTime=0;
     private String location="";
+    Date date = initDate;  // 最后更新状态的时间
     private String message = "";
-    private static final QueryResult emptyInstance = new QueryResult();
+
 
     public static QueryResult getEmptyInstance(){
         return emptyInstance;
     }
 
-    public void setAll(String name, MStatus status, int remainTime, String message) {
-        this.name = name;
-        this.status = status;
-        this.remainTime = remainTime;
-        this.message = message;
-
+    public boolean isInit(){
+        return status == MStatus.INIT;
     }
-
-
 
     @Override
     public String toString() {
@@ -30,8 +29,9 @@ public class QueryResult implements Serializable {
                 "name='" + name + '\'' +
                 ", status=" + status +
                 ", remainTime=" + remainTime +
-                ", loaction='" + location + '\'' +
+                ", location='" + location + '\'' +
                 ", message='" + message + '\'' +
+                ", date='" + date.toString() + '\'' +
                 '}';
     }
 
@@ -49,8 +49,18 @@ public class QueryResult implements Serializable {
                 ",\"status\":\"" + status + "\""+
                 ",\"location\":\"" + location + "\""+
                 ",\"message\":\"" + message + '\"' +
+                ",\"timestamp\":\"" + date.getTime() + '\"' +
+                ",\"date\":\"" + date.toString() + '\"' +
                 ",\"remainTime\":" + remainTime +
                 "}";
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getName() {
