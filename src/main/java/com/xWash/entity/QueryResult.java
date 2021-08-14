@@ -19,6 +19,8 @@ public class QueryResult implements Serializable {
         return emptyInstance;
     }
 
+    public boolean isNormal(){return status == MStatus.AVAILABLE || status == MStatus.USING ;}
+
     public boolean isInit(){
         return status == MStatus.INIT;
     }

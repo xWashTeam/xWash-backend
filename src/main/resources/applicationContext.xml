@@ -33,7 +33,9 @@
     </bean>
     <task:annotation-driven/>
     <mvc:annotation-driven/>
-    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+    <aop:aspectj-autoproxy/>
+<!--    <aop:aspectj-autoproxy proxy-target-class="true"/>-->
     <import resource="spring-redis.xml"/>
     <import resource="spring-mybatis.xml"/>
 </beans>

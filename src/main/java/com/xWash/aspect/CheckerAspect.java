@@ -23,8 +23,10 @@ public class CheckerAspect {
         try {
             result = jp.proceed();
             QueryResult qs = (QueryResult) result;
-            synchronized (logger){
-                logger.info("qrLink -> " + qrLink + ", QueryResult -> " + result);
+            if (!qs.isNormal()){
+                synchronized (logger){
+                    logger.info("qrLink -> " + qrLink + ", QueryResult -> " + result);
+                }
             }
         } catch (Throwable throwable) {
             synchronized (logger){
