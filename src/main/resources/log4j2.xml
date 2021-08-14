@@ -1,4 +1,4 @@
-<Configuration status="WARN" monitorInterval="300">
+<Configuration status="INFO" monitorInterval="300">
     <properties>
         <property name="LOG_HOME">${sys:user.home}/logs/</property>
     </properties>
