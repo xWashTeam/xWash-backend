@@ -14,6 +14,7 @@ import com.xWash.util.ComparatorsUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -21,15 +22,16 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
-@Service
+@Service("distributor")
 public class Distributor implements IDistributor {
 
-    final UCleanChecker uCleanChecker;
-    final UCleanAPPChecker uCleanAPPChecker;
-    final SodaChecker sodaChecker;
-    Logger logger = LogManager.getLogger("checkerLog");
-
-    public Distributor(@Autowired UCleanChecker uCleanChecker, @Autowired UCleanAPPChecker uCleanAPPChecker, @Autowired SodaChecker sodaChecker) {
+    final IChecker uCleanChecker;
+    final IChecker uCleanAPPChecker;
+    final IChecker sodaChecker;
+    @Autowired
+    public Distributor(  @Qualifier("uCleanChecker") IChecker  uCleanChecker,
+                         @Qualifier("uCleanAppChecker") IChecker uCleanAPPChecker,
+                         @Qualifier("sodaChecker") IChecker sodaChecker) {
         this.uCleanChecker = uCleanChecker;
         this.uCleanAPPChecker = uCleanAPPChecker;
         this.sodaChecker = sodaChecker;
@@ -53,7 +55,6 @@ public class Distributor implements IDistributor {
         } catch (Exception e) {
             result.setStatus(MStatus.UNKNOWN);
             result.setMessage("网络错误！请稍后查看");
-            logger.warn(json.get("name") + " -> (" + e.getCause() + ") " + e.getMessage());
         } finally {
             return result;
         }
@@ -91,7 +92,7 @@ public class Distributor implements IDistributor {
             new Thread(() -> {
                 JSONObject machineJson = (JSONObject) allMachineJson.get(machineName);
                 QueryResult qs = checkDependOnMachineKind(machineJson);  // 发起查询
-                if (!qs.isInit()) {
+                if (qs!=null && !qs.isInit()) {
                     qs.setLocation((String) machineJson.get("location"));
                     qs.setDate(new Date());
                 }

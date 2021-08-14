@@ -5,12 +5,15 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.xWash.entity.Building;
 import com.xWash.entity.QueryResult;
+import com.xWash.service.IDistributor;
 import com.xWash.service.Impl.Distributor;
+import com.xWash.service.Impl.UCleanAPPChecker;
 import com.xWash.util.BuildingFileUtil;
 import com.xWash.util.ComparatorsUtil;
 import com.xWash.util.MysqlUtil;
 import com.xWash.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -31,29 +34,29 @@ public class APIChecker {
     //TODO 将文件内容存为缓存 - 软引用
 
     @Autowired
-    Distributor distributor;
+    @Qualifier("distributor")
+    IDistributor distributor;
     @Autowired
     RedisUtil redisUtil;
     @Autowired
     MysqlUtil mysqlUtil;
 
-    @Scheduled(cron = "1/10 * * * * ?")
-    public void checkFromAPI(){
+    @Scheduled(cron = "1/30 * * * * ?")
+    public void checkFromAPI() {
         // TODO 增加夜晚查询策略
-        redisUtil.setStr_Str("date",new Date().toString());
-
+        redisUtil.setStr_Str("date", new Date().toString());
         ArrayList<Building> buildings = mysqlUtil.getAllBuildings();
 
-        for (Building building:
-             buildings) {
-            Map<String, QueryResult> result = distributor.queryByJsonString(building.getName(),building.getContent());
+        for (Building building :
+                buildings) {
+            Map<String, QueryResult> result = distributor.queryByJsonString(building.getName(), building.getContent());
 
-            if (result != null){
+            if (result != null) {
                 result.entrySet()
                         .stream()
                         .sorted(ComparatorsUtil.getComparator(building.getName()))
-                        .forEach(entry->{
-                            redisUtil.hashSet(building.getName(),entry.getKey(),entry.getValue());
+                        .forEach(entry -> {
+                            redisUtil.hashSet(building.getName(), entry.getKey(), entry.getValue());
                         });
             }
         }

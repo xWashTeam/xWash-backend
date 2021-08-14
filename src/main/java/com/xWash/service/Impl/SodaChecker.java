@@ -6,7 +6,7 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.*;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("sodaChecker")
 public class SodaChecker implements IChecker{
 
     public QueryResult checkByQrLink(String qrLink) {
@@ -37,7 +37,7 @@ public class SodaChecker implements IChecker{
         return queryResult;
     }
 
-    private String getResponse(String url){
+    public String getResponse(String url){
         return HttpUtil.get(url);  // Hutool lib
     }
 

@@ -7,7 +7,7 @@ import com.xWash.entity.QueryResult;
 import com.xWash.entity.MStatus;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("uCleanChecker")
 public class UCleanChecker implements IChecker{
 
     private int timeout = 2000;
@@ -16,12 +16,11 @@ public class UCleanChecker implements IChecker{
     private String para2="\",\"isRemoved\":false},\"scope\":{\"fields\":[\"virtualId\",\"scanSelfClean\",\"hasAutoLaunchDevice\",\"autoLaunchDeviceOutOfStock\",\"isSlotMachine\",\"deviceTypeId\",\"online\",\"status\",\"boxTypeId\",\"sn\"]},\"include\":[{\"relation\":\"store\",\"scope\":{\"fields\":[\"isRemoved\",\"enable\"]}}]}";
 
     public QueryResult checkByQrLink(String qrLink) throws HttpException {
-        return checkByUrl(hostUrl + para1+qrLink+para2);
+        return dealWithResponse(getResponse(qrLink));
     }
 
-    private QueryResult checkByUrl(String url) throws HttpException {
-        String response = HttpUtil.get(url,timeout);
-        return dealWithResponse(response);
+    public String getResponse(String qrLink) {
+        return HttpUtil.get(hostUrl + para1+qrLink+para2,timeout);
     }
 
     private QueryResult dealWithResponse(String response){
