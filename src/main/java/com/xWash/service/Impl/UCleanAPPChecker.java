@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class UCleanAPPChecker implements IChecker {
     private int timeout = 2000;
     private String host = "https://phoenix.ujing.online:443/api/v1/devices/scanWasherCode";
-    private String Authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA2NjM4NDIsIm5hbWUiOiIxMzAyNTE2MDAzNiIsImFwcFVzZXJJZCI6MTI2OTcxNzksImlhdCI6MTYyMDk4NjE3MywiZXhwIjoxNjI5MDIxMzczfQ.TJvITEHADsLSBCvzyxtdhYOLrsIx4mTVDsB_ewS0-B8";
+    private String Authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA2NjM4NDIsIm5hbWUiOiIxMzAyNTE2MDAzNiIsImFwcFVzZXJJZCI6MTI2OTcxNzksImlhdCI6MTYyOTc5NjgzMCwiZXhwIjoxNjM3ODMyMDMwfQ.jamr9UUU6tYJafj-HsYa5zng7pY8ah7qquumxn_ltII";
 
     @Override
     public String getResponse(String qrLink){
