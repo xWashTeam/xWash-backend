@@ -1,0 +1,86 @@
+{
+  "xi2_E_1.1": {
+    "name": "xi2_E_1.1",
+    "id": "G370236",
+    "location": "西二1楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=G370236"
+  },
+  "xi2_E_1.2": {
+    "name": "xi2_E_1.2",
+    "id": "G355719",
+    "location": "西二1楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=G355719"
+  },
+  "xi2_E_2.1": {
+    "name": "xi2_E_2.1",
+    "id": 308249,
+    "location": "西二2楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=308249"
+  },
+  "xi2_E_2.2": {
+    "name": "xi2_E_2.2",
+    "id": 103986,
+    "location": "西二2楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=103986"
+  },
+  "xi2_E_3.1": {
+    "name": "xi2_E_3.1",
+    "id": 36129,
+    "location": "西二3楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=36129"
+  },
+  "xi2_E_3.2": {
+    "name": "xi2_E_3.2",
+    "id": 35107,
+    "location": "西二3楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=35107"
+  },
+  "xi2_E_4.1": {
+    "name": "xi2_E_4.1",
+    "id": 23579,
+    "location": "西二4楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=23579"
+  },
+  "xi2_E_4.2": {
+    "name": "xi2_E_4.2",
+    "id": 101053,
+    "location": "西二4楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=101053"
+  },
+  "xi2_E_5.1": {
+    "name": "xi2_E_5.1",
+    "id": 23009,
+    "location": "西二5楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=23009"
+  },
+  "xi2_E_5.2": {
+    "name": "xi2_E_5.2",
+    "id": 103980,
+    "location": "西二5楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=103980"
+  },
+  "xi2_E_6.1": {
+    "name": "xi2_E_6.1",
+    "id": 102783,
+    "location": "西二6楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=102783"
+  },
+  "xi2_E_6.2": {
+    "name": "xi2_E_6.2",
+    "id": 101125,
+    "location": "西二6楼",
+    "belong": "washpayerChecker",
+    "qrLink": "https://www.washpayer.com/userLogin?l=101125"
+  }
+}

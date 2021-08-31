@@ -2,6 +2,7 @@ package com.xWash.service.Impl;
 
 import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.xWash.entity.MStatus;
@@ -16,16 +17,16 @@ public class UCleanAPPChecker implements IChecker {
     private String Authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA2NjM4NDIsIm5hbWUiOiIxMzAyNTE2MDAzNiIsImFwcFVzZXJJZCI6MTI2OTcxNzksImlhdCI6MTYyOTc5NjgzMCwiZXhwIjoxNjM3ODMyMDMwfQ.jamr9UUU6tYJafj-HsYa5zng7pY8ah7qquumxn_ltII";
 
     @Override
-    public String getResponse(String qrLink){
+    public HttpResponse getResponse(String qrLink){
         JSONObject jo = new JSONObject();
         jo.putOnce("qrCode",qrLink);
         return HttpRequest.post(host).timeout(timeout).header("Authorization",Authorization).body(String.valueOf(jo))
-                .execute().body();
+                .execute();
     }
 
     @Override
     public QueryResult checkByQrLink(String qrLink) throws HttpException {
-        JSONObject resJson = JSONUtil.parseObj(getResponse(qrLink));
+        JSONObject resJson = JSONUtil.parseObj(getResponse(qrLink).body());
         return dealWithResponse(resJson);
     }
 
