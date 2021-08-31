@@ -13,6 +13,7 @@ import com.xWash.service.IDistributor;
 import com.xWash.util.ComparatorsUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -25,37 +26,26 @@ import java.util.concurrent.CountDownLatch;
 @Service("distributor")
 public class Distributor implements IDistributor {
 
-    final IChecker uCleanChecker;
-    final IChecker uCleanAPPChecker;
-    final IChecker sodaChecker;
-
+    private final BeanFactory beanFactory;
 
     @Autowired
-    public Distributor(@Qualifier("uCleanChecker") IChecker uCleanChecker,
-                       @Qualifier("uCleanAppChecker") IChecker uCleanAPPChecker,
-                       @Qualifier("sodaChecker") IChecker sodaChecker) {
-        this.uCleanChecker = uCleanChecker;
-        this.uCleanAPPChecker = uCleanAPPChecker;
-        this.sodaChecker = sodaChecker;
+    public Distributor(BeanFactory beanFactory) {
+        this.beanFactory = beanFactory;
     }
 
     public QueryResult checkDependOnMachineKind(JSONObject json) {
         // TODO 解耦
         String belong = ((String) json.get("belong"));
         IChecker checker = null;
-        if (belong.equals("UClean")) {
-            checker = uCleanChecker;
-        } else if (belong.equals("sodalife")) {
-            checker = sodaChecker;
-        } else if (belong.equals("UCleanAPP")) {
-            checker = uCleanAPPChecker;
-        } else {
+        try{
+            checker = (IChecker) beanFactory.getBean(belong);
+        }catch (Exception e){
             return new QueryResult();
         }
+
         QueryResult result = QueryResult.getEmptyInstance();
         try {
             result = checker.checkByQrLink((String) json.get("qrLink"));
-            System.out.println(checker.getResponse((String) json.get("qrLink")));
         } catch (Exception e) {
             result.setStatus(MStatus.UNKNOWN);
             result.setMessage("网络错误！请稍后查看");

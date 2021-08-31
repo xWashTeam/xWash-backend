@@ -1,4 +1,6 @@
 package com.xWash.service.Impl;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
 import com.xWash.service.IChecker;
 import com.xWash.entity.QueryResult;
 import com.xWash.entity.MStatus;
@@ -15,7 +17,7 @@ public class SodaChecker implements IChecker{
 
 
     private QueryResult checkByUrl(String url) {
-        String response = getResponse(url);
+        String response = getResponse(url).body();
         return dealWithResponse(response);
     }
 
@@ -37,16 +39,16 @@ public class SodaChecker implements IChecker{
         return queryResult;
     }
 
-    public String getResponse(String url){
-        return HttpUtil.get(url);  // Hutool lib
+    public HttpResponse getResponse(String url){
+        return HttpRequest.get(url).execute();  // Hutool lib
     }
 
     public static void main(String[] args) {
         JSONObject jo = JSONUtil.parseObj("{\"status\":\"OK\",\"data\":{\"feature\":\"LAUNDRY\",\"hotline\":\"13570055540\",\"id\":37377,\"merchant\":{\"companyName\":\"\"},\"modes\":[{\"preset\":\"LAUNDRY_DRY\",\"name\":\"单脱\",\"value\":1,\"count\":1,\"unit\":\"次\",\"description\":\"\",\"originalValue\":1},{\"preset\":\"LAUNDRY_EXPRESS\",\"name\":\"快洗\",\"value\":2,\"count\":1,\"unit\":\"次\",\"description\":\"\",\"originalValue\":2},{\"preset\":\"LAUNDRY_STANDARD\",\"name\":\"标准洗\",\"value\":3,\"count\":1,\"unit\":\"次\",\"description\":\"\",\"originalValue\":3},{\"preset\":\"LAUNDRY_HEAVY\",\"name\":\"大物洗\",\"value\":4,\"count\":1,\"unit\":\"次\",\"description\":\"\",\"originalValue\":4}],\"online\":false,\"protocol\":\"TOKEN_V1\",\"serial\":\"MNBGDH0867\",\"status\":\"AVAILABLE\"},\"message\":\"\",\"code\":\"12080000\"}");
-        System.out.println(jo.toStringPretty());
+//        System.out.println(jo.toStringPretty());
         JSONObject joo = (JSONObject) (jo.get("data"));
-        System.out.println(joo.get("status"));
-        System.out.println(new SodaChecker().checkByQrLink("https://api.sodalife.xyz/v1/devices/MNBGDH0867"));
+//        System.out.println(joo.get("status"));
+//        System.out.println(new SodaChecker().checkByQrLink("https://api.sodalife.xyz/v1/devices/MNBGDH0867"));
     }
 
 }

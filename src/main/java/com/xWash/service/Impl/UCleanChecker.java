@@ -1,5 +1,7 @@
 package com.xWash.service.Impl;
 import cn.hutool.http.HttpException;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.*;
 import com.xWash.service.IChecker;
@@ -16,11 +18,11 @@ public class UCleanChecker implements IChecker{
     private String para2="\",\"isRemoved\":false},\"scope\":{\"fields\":[\"virtualId\",\"scanSelfClean\",\"hasAutoLaunchDevice\",\"autoLaunchDeviceOutOfStock\",\"isSlotMachine\",\"deviceTypeId\",\"online\",\"status\",\"boxTypeId\",\"sn\"]},\"include\":[{\"relation\":\"store\",\"scope\":{\"fields\":[\"isRemoved\",\"enable\"]}}]}";
 
     public QueryResult checkByQrLink(String qrLink) throws HttpException {
-        return dealWithResponse(getResponse(qrLink));
+        return dealWithResponse(getResponse(qrLink).body());
     }
 
-    public String getResponse(String qrLink) {
-        return HttpUtil.get(hostUrl + para1+qrLink+para2,timeout);
+    public HttpResponse getResponse(String qrLink) {
+        return HttpRequest.get(hostUrl + para1+qrLink+para2).timeout(timeout).execute();
     }
 
     private QueryResult dealWithResponse(String response){

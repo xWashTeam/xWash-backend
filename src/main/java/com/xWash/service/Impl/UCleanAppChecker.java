@@ -11,7 +11,7 @@ import com.xWash.service.IChecker;
 import org.springframework.stereotype.Service;
 
 @Service("uCleanAppChecker")
-public class UCleanAPPChecker implements IChecker {
+public class UCleanAppChecker implements IChecker {
     private int timeout = 2000;
     private String host = "https://phoenix.ujing.online:443/api/v1/devices/scanWasherCode";
     private String Authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA2NjM4NDIsIm5hbWUiOiIxMzAyNTE2MDAzNiIsImFwcFVzZXJJZCI6MTI2OTcxNzksImlhdCI6MTYyOTc5NjgzMCwiZXhwIjoxNjM3ODMyMDMwfQ.jamr9UUU6tYJafj-HsYa5zng7pY8ah7qquumxn_ltII";
