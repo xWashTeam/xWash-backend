@@ -57,7 +57,7 @@ public class CheckController {
         map.entrySet().stream()
                 .sorted(ComparatorsUtil.getComparator(building))
                 .forEach(entry->{
-                    resJson.set(entry.getKey(),entry.getValue().toJson());
+                    resJson.set(entry.getKey(),JSONUtil.parseObj(entry.getValue().toJson()));
                 });
         mv.setViewName("api");
         return APIResult.createWithData(200, resJson);

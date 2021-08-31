@@ -39,7 +39,7 @@ public class RedisUtil {
         return (String) redisTemplate.opsForHash().get(key,field);
     }
 
-    public void hashSet(String key, String field, QueryResult value){
+    public void hashSet(String key, String field, Object value){
         redisTemplate.opsForHash().put(key, field, value);
     }
 
