@@ -39,7 +39,7 @@
 		"id": "26351",
 		"location": "西一3楼",
 		"belong": "washpayerChecker",
-		"qrLink": "http://www.washpayer.com/userLogin?l=26351"
+		"qrLink": "https://www.washpayer.com/userLogin?l=26351"
 	},
 	"xi1_W_4.1": {
 		"name": "xi1_W_4.1",
@@ -67,7 +67,7 @@
 		"id": "26365",
 		"location": "西一5楼",
 		"belong": "washpayerChecker",
-		"qrLink": "http://www.washpayer.com/userLogin?l=26365"
+		"qrLink": "https://www.washpayer.com/userLogin?l=26365"
 	},
 	"xi1_W_6.1": {
 		"name": "xi1_W_6.1",

@@ -1,14 +1,14 @@
 {
-  "d19_E_1.5":{"name":"d19_E_1.5","belong":"ucleanAppChecker","location":"东十九东边1.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555201809040059546"},
-  "d19_W_1.5":{"name":"d19_W_1.5","belong":"ucleanAppChecker","location":"东十九西边1.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing&uuid=0000000000000A0007604202011190000976"},
-  "d19_E_2.5":{"name":"d19_E_2.5","belong":"ucleanChecker","location":"东十九东边2.5楼","qrLink":"https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176799"},
-  "d19_W_2.5":{"name":"d19_W_2.5","belong":"ucleanAppChecker","location":"东十九西边2.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing&uuid=0000000000000A0007604202011190001378"},
-  "d19_E_3.5":{"name":"d19_E_3.5","belong":"ucleanChecker","location":"东十九东边3.5楼","qrLink":"https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176727"},
-  "d19_W_3.5":{"name":"d19_W_3.5","belong":"ucleanChecker","location":"东十九西边3.5楼","qrLink":"https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170175473"},
-  "d19_E_4.5":{"name":"d19_E_4.5","belong":"ucleanAppChecker","location":"东十九东边4.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing&uuid=0000000000000A0007604202011190001038"},
-  "d19_W_4.5":{"name":"d19_W_4.5","belong":"ucleanAppChecker","location":"东十九西边4.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555201809040059169"},
-  "d19_E_5.5":{"name":"d19_E_5.5","belong":"ucleanChecker","location":"东十九东边5.5楼","qrLink":"https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176798"},
-  "d19_W_5.5":{"name":"d19_W_5.5","belong":"ucleanAppChecker","location":"东十九西边5.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555202101100166240"},
-  "d19_E_6.5":{"name":"d19_E_6.5","belong":"ucleanChecker","location":"东十九东边6.5楼","qrLink":"https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176797"},
-  "d19_W_6.5":{"name":"d19_W_6.5","belong":"ucleanAppChecker","location":"东十九西边6.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555202102270169223"}
+  "d19_E_1.5":{"name":"d19_E_1.5","belong":"uCleanAppChecker","location":"东十九东边1.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555201809040059546"},
+  "d19_W_1.5":{"name":"d19_W_1.5","belong":"uCleanAppChecker","location":"东十九西边1.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing&uuid=0000000000000A0007604202011190000976"},
+  "d19_E_2.5":{"name":"d19_E_2.5","belong":"uCleanChecker","location":"东十九东边2.5楼","qrLink":"https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176799"},
+  "d19_W_2.5":{"name":"d19_W_2.5","belong":"uCleanAppChecker","location":"东十九西边2.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing&uuid=0000000000000A0007604202011190001378"},
+  "d19_E_3.5":{"name":"d19_E_3.5","belong":"uCleanChecker","location":"东十九东边3.5楼","qrLink":"https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176727"},
+  "d19_W_3.5":{"name":"d19_W_3.5","belong":"uCleanChecker","location":"东十九西边3.5楼","qrLink":"https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170175473"},
+  "d19_E_4.5":{"name":"d19_E_4.5","belong":"uCleanAppChecker","location":"东十九东边4.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing&uuid=0000000000000A0007604202011190001038"},
+  "d19_W_4.5":{"name":"d19_W_4.5","belong":"uCleanAppChecker","location":"东十九西边4.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555201809040059169"},
+  "d19_E_5.5":{"name":"d19_E_5.5","belong":"uCleanChecker","location":"东十九东边5.5楼","qrLink":"https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176798"},
+  "d19_W_5.5":{"name":"d19_W_5.5","belong":"uCleanAppChecker","location":"东十九西边5.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555202101100166240"},
+  "d19_E_6.5":{"name":"d19_E_6.5","belong":"uCleanChecker","location":"东十九东边6.5楼","qrLink":"https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176797"},
+  "d19_W_6.5":{"name":"d19_W_6.5","belong":"uCleanAppChecker","location":"东十九西边6.5楼","qrLink":"http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555202102270169223"}
 }
