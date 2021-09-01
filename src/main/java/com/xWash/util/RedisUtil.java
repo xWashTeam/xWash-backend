@@ -43,6 +43,10 @@ public class RedisUtil {
         redisTemplate.opsForHash().put(key, field, value);
     }
 
+    public void hashRemove(String key, String field){
+        redisTemplate.opsForHash().delete(key,field);
+    }
+
     public void setStr_Str(String key, String value){
         ValueOperations<String, String> vo = redisTemplate.opsForValue();
         vo.set(key,value);

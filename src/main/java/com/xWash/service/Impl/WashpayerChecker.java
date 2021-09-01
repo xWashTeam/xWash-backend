@@ -8,6 +8,7 @@ import cn.hutool.json.JSONUtil;
 import com.xWash.entity.MStatus;
 import com.xWash.entity.QueryResult;
 import com.xWash.service.IChecker;
+import com.xWash.util.MysqlUtil;
 import com.xWash.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,10 +18,14 @@ import org.springframework.stereotype.Service;
 public class WashpayerChecker implements IChecker {
     @Autowired
     RedisUtil redisUtil;
+    @Autowired
+    MysqlUtil mysqlUtil;
+
     private final static String checkUrl = "https://www.washpayer.com/user/startAction";
+    private final static String userAgent = "";
     private final static int timeout = 10000;
     private final static String startKey = "ojqSxwAC-NiAEMqO3asVzc0CO6OI-1630153349410-11770";  // 不知道这参数是干啥的，但是不可或缺
-    private final static String authCookie = "jwt_auth_domain=MyUser;"+"MyUser_session_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzAxNTc4ODMsInVzZXJfaWQiOiI2MGFkYzI1MDZmMjkyNTRiNjRiZDQ2MDYiLCJleHAiOjE2MzI3Nzg2ODN9.5l8UTY4Wsi1JeFnSrNSfQ-HPN_vUUuxJJ9fbjy7yF3k";
+    private final static String authCookie = "jwt_auth_domain=MyUser;MyUser_session_id=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzAxNTc4ODMsInVzZXJfaWQiOiI2MGFkYzI1MDZmMjkyNTRiNjRiZDQ2MDYiLCJleHAiOjE2MzI3Nzg2ODN9.5l8UTY4Wsi1JeFnSrNSfQ-HPN_vUUuxJJ9fbjy7yF3k";
     private final JSONObject postBody;
 
     {
@@ -33,18 +38,22 @@ public class WashpayerChecker implements IChecker {
                 "}\n");
     }
 
+    public static String getDevnoByNetwork(String qrLink){
+        HttpResponse response = HttpRequest.get(qrLink)
+                .cookie(authCookie)
+                .header("user-agent","Mozilla/5.0 (Linux; Android 10; MI 8 Build/QKQ1.190828.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045713 Mobile Safari/537.36 MMWEBID/8395 MicroMessenger/8.0.10.1960(0x28000A31) Process/tools WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64")
+                .execute();
+        return response.getCookie("user_dev_no").getValue();
+    }
+
     public String getNoFromQrLink(String qrLink){
         String devNo = redisUtil.hashGet("washpayer_link_to_devno",qrLink);
         if (devNo != null && !devNo.equals("")) {
             return devNo;
         }
-        HttpResponse response = HttpRequest.get(qrLink)
-                .cookie(authCookie)
-                .header("user-agent","Mozilla/5.0 (Linux; Android 10; MI 8 Build/QKQ1.190828.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045713 Mobile Safari/537.36 MMWEBID/8395 MicroMessenger/8.0.10.1960(0x28000A31) Process/tools WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64")
-                .execute();
-        devNo = response.getCookie("user_dev_no").getValue();
-        System.out.println("1");
-
+        devNo = mysqlUtil.getDevnoByQrlink(qrLink).getDevno();
+        if (devNo != null)
+            devNo = getDevnoByNetwork(qrLink);
         redisUtil.hashSet("washpayer_link_to_devno",qrLink,devNo);
 
         return devNo;

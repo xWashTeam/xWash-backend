@@ -1,14 +1,11 @@
 package com.xWash.tasks;
 
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.xWash.entity.Building;
 import com.xWash.entity.QueryResult;
 import com.xWash.service.IDistributor;
-import com.xWash.service.Impl.Distributor;
-import com.xWash.service.Impl.UCleanAPPChecker;
-import com.xWash.util.BuildingFileUtil;
+import com.xWash.service.Impl.WashpayerChecker;
 import com.xWash.util.ComparatorsUtil;
 import com.xWash.util.MysqlUtil;
 import com.xWash.util.RedisUtil;
@@ -18,11 +15,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import javax.annotation.PostConstruct;
+import java.lang.reflect.Array;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 从网络API获取数据并写入redis
@@ -61,5 +56,28 @@ public class APIChecker {
             }
         }
 
+    }
+
+    @PostConstruct
+    public void initData() {
+        mysqlUtil.updateAllBuildings();
+        ArrayList<Building> buildings = mysqlUtil.getAllBuildings();
+        buildings.forEach((building) -> {
+            JSONObject jo = JSONUtil.parseObj(building.getContent());
+            for (Map.Entry<String, Object> entry :
+                    jo.entrySet()) {
+                JSONObject joo = JSONUtil.parseObj(entry.getValue());
+                if (joo.get("belong").equals("washpayerChecker")) {
+                    String devno = null;
+                    String qrLink = (String) joo.get("qrLink");
+                    devno = WashpayerChecker.getDevnoByNetwork(qrLink);
+                    if (devno != null && !devno.equals("")){
+                        mysqlUtil.updateWashpayerInfo(entry.getKey(), qrLink, devno);
+                        redisUtil.hashRemove("washpayer_link_to_devno",qrLink);
+                    }
+
+                }
+            }
+        });
     }
 }
