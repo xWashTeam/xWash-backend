@@ -10,6 +10,6 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface IDistributor {
-    ConcurrentHashMap<String, QueryResult> queryByJsonString(String name, String jsonStr);
-    ConcurrentHashMap<String, QueryResult> queryByJsonObject(String name, JSONObject json);
+    void queryByJsonString(String name, String jsonStr);
+    void queryByJsonObject(String name, JSONObject json);
 }

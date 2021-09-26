@@ -1,32 +1,25 @@
 package com.xWash.service.Impl;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.resource.ResourceUtil;
-import cn.hutool.http.HttpException;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.xWash.entity.MStatus;
 import com.xWash.service.IChecker;
-import com.xWash.util.BuildingFileUtil;
 import com.xWash.entity.QueryResult;
 import com.xWash.service.IDistributor;
-import com.xWash.util.ComparatorsUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.xWash.util.RedisUtil;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
 
 @Service("distributor")
 public class Distributor implements IDistributor {
 
     private final BeanFactory beanFactory;
+    @Autowired
+    RedisUtil redisUtil;
 
     @Autowired
     public Distributor(BeanFactory beanFactory) {
@@ -60,12 +53,11 @@ public class Distributor implements IDistributor {
      * 根据传入json字符串查询
      *
      * @param jsonStr string
-     * @return 查询结果
      */
     @Override
-    public ConcurrentHashMap<String, QueryResult> queryByJsonString(String name, String jsonStr) {
+    public void queryByJsonString(String name, String jsonStr) {
         JSONObject json = JSONUtil.parseObj(jsonStr, false, true);
-        return queryByJsonObject(name, json);
+        queryByJsonObject(name, json);
     }
 
     /**
@@ -76,30 +68,34 @@ public class Distributor implements IDistributor {
      * @return 查询结果Map key:洗衣机名  value: 洗衣机状态
      */
     @Override
-    public ConcurrentHashMap<String, QueryResult> queryByJsonObject(String name, JSONObject allMachineJson) {
-        final ConcurrentHashMap<String, QueryResult> hashMap = new ConcurrentHashMap<>(32);
-        CountDownLatch cdl = new CountDownLatch(allMachineJson.size());
+    public void queryByJsonObject(String buildingName, JSONObject allMachineJson) {
+        class CheckWorker implements Runnable{
+            private String building;
+            private JSONObject json;
 
-        for (String machineName :
-                allMachineJson.keySet()) {
-            new Thread(() -> {
-                JSONObject machineJson = (JSONObject) allMachineJson.get(machineName);
-                QueryResult qs = checkDependOnMachineKind(machineJson);  // 发起查询
+            public CheckWorker(String building, JSONObject json) {
+                this.building = building;
+                this.json = json;
+            }
+
+            @Override
+            public void run() {
+                QueryResult qs = checkDependOnMachineKind(json);  // 发起查询
                 if (qs != null && !qs.isInit()) {
-                    qs.setLocation((String) machineJson.get("location"));
+                    qs.setLocation((String) json.get("location"));
                     qs.setDate(new Date());
-                    hashMap.put(machineName, qs);
+                    redisUtil.hashSet(building, (String) json.get("name"),qs);
                 }
-                cdl.countDown();
-            }).start();
+            }
         }
 
 
-        try {
-            cdl.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        ThreadPoolTaskExecutor executor = (ThreadPoolTaskExecutor) beanFactory.getBean("taskExecutor");
+        for (Map.Entry<String, Object> entry :
+                allMachineJson.entrySet()) {
+            // 先这样，后面需要先修改Checker的逻辑再来动这一块
+            executor.submit(new CheckWorker(buildingName, (JSONObject) entry.getValue()));
         }
-        return hashMap;
+
     }
 }

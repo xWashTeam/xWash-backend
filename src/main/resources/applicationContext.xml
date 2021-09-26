@@ -31,6 +31,22 @@
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <!-- 线程池维护线程的最少数量 -->
+        <property name="corePoolSize" value="12" />
+        <!-- 允许的空闲时间 -->
+        <property name="keepAliveSeconds" value="60" />
+        <!-- 线程池维护线程的最大数量 -->
+        <property name="maxPoolSize" value="24" />
+        <!-- 缓存队列 -->
+        <property name="queueCapacity" value="48" />
+        <!-- 对拒绝task的处理策略 -->
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+        </property>
+    </bean>
+
     <task:annotation-driven/>
     <mvc:annotation-driven/>
 

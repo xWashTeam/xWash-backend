@@ -25,9 +25,6 @@ import java.util.*;
 @Component
 @EnableScheduling
 public class APIChecker {
-
-    //TODO 将文件内容存为缓存 - 软引用
-
     @Autowired
     @Qualifier("distributor")
     IDistributor distributor;
@@ -44,16 +41,7 @@ public class APIChecker {
 
         for (Building building :
                 buildings) {
-            Map<String, QueryResult> result = distributor.queryByJsonString(building.getName(), building.getContent());
-
-            if (result != null) {
-                result.entrySet()
-                        .stream()
-                        .sorted(ComparatorsUtil.getComparator(building.getName()))
-                        .forEach(entry -> {
-                            redisUtil.hashSet(building.getName(), entry.getKey(), entry.getValue());
-                        });
-            }
+            distributor.queryByJsonString(building.getName(), building.getContent());
         }
 
     }
