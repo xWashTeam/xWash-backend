@@ -2,11 +2,10 @@ package com.xWash.service.Impl;
 import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
 import cn.hutool.json.*;
-import com.xWash.service.IChecker;
-import com.xWash.entity.QueryResult;
-import com.xWash.entity.MStatus;
+import com.xWash.service.intf.IChecker;
+import com.xWash.model.entity.QueryResult;
+import com.xWash.model.entity.MStatus;
 import org.springframework.stereotype.Service;
 
 @Service("uCleanChecker")

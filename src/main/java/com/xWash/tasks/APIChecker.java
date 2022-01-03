@@ -2,11 +2,9 @@ package com.xWash.tasks;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.xWash.entity.Building;
-import com.xWash.entity.QueryResult;
-import com.xWash.service.IDistributor;
+import com.xWash.model.dao.Building;
+import com.xWash.service.intf.IDistributor;
 import com.xWash.service.Impl.WashpayerChecker;
-import com.xWash.util.ComparatorsUtil;
 import com.xWash.util.MysqlUtil;
 import com.xWash.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**

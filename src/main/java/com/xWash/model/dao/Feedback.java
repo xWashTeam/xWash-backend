@@ -1,4 +1,4 @@
-package com.xWash.entity;
+package com.xWash.model.dao;
 
 import java.util.Date;
 

@@ -52,6 +52,6 @@
 
     <aop:aspectj-autoproxy/>
 <!--    <aop:aspectj-autoproxy proxy-target-class="true"/>-->
-    <import resource="spring-redis.xml"/>
-    <import resource="spring-mybatis.xml"/>
+    <import resource="redis/spring-redis.xml"/>
+    <import resource="mapper/spring-mybatis.xml"/>
 </beans>

@@ -1,10 +1,10 @@
 package com.xWash.util;
 
 import cn.hutool.core.io.FileUtil;
-import com.xWash.dao.BuildingMapper;
-import com.xWash.dao.WashpayerInfoMapper;
-import com.xWash.entity.Building;
-import com.xWash.entity.WashpayerInfo;
+import com.xWash.mapper.BuildingMapper;
+import com.xWash.mapper.WashpayerInfoMapper;
+import com.xWash.model.dao.Building;
+import com.xWash.model.entity.WashpayerInfo;
 import org.springframework.stereotype.Component;
 
 import java.io.File;

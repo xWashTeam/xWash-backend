@@ -1,4 +1,4 @@
-package com.xWash.entity;
+package com.xWash.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;

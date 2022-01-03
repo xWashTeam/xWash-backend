@@ -1,9 +1,6 @@
 package com.xWash.util;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.resource.ClassPathResource;
-import cn.hutool.core.io.resource.ResourceUtil;
-import sun.misc.Resource;
 
 import java.io.File;
 import java.net.URISyntaxException;

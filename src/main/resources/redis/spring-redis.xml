@@ -9,7 +9,7 @@
             http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context.xsd">
     <!--扫描redis配置文件-->
-    <context:property-placeholder ignore-unresolvable="true" location="classpath:redisProp.properties"/>
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:redis/redisProp.properties"/>
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory"   ref="jedisConnFactory" />
         <property name="keySerializer">

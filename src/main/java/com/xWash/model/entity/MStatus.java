@@ -1,4 +1,4 @@
-package com.xWash.entity;
+package com.xWash.model.entity;
 
 public enum MStatus {
     INIT,       // 初始化未修改，防止出现网络超时

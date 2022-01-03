@@ -5,13 +5,12 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.xWash.entity.MStatus;
-import com.xWash.entity.QueryResult;
-import com.xWash.service.IChecker;
+import com.xWash.model.entity.MStatus;
+import com.xWash.model.entity.QueryResult;
+import com.xWash.service.intf.IChecker;
 import com.xWash.util.MysqlUtil;
 import com.xWash.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service("washpayerChecker")

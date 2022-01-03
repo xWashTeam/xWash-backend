@@ -1,31 +1,21 @@
-package com.xWash.admin;
+package com.xWash.controller;
 
 
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.xWash.entity.APIResult;
-import com.xWash.entity.QueryResult;
+import com.xWash.model.entity.APIResult;
+import com.xWash.model.entity.QueryResult;
 import com.xWash.service.Impl.Distributor;
-import com.xWash.util.BuildingFileUtil;
 import com.xWash.util.ComparatorsUtil;
 import com.xWash.util.RedisUtil;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 

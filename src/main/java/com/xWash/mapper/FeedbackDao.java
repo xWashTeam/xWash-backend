@@ -1,6 +1,6 @@
-package com.xWash.dao;
+package com.xWash.mapper;
 
-import com.xWash.entity.Feedback;
+import com.xWash.model.dao.Feedback;
 
 import java.util.ArrayList;
 

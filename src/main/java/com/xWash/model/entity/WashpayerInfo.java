@@ -1,4 +1,4 @@
-package com.xWash.entity;
+package com.xWash.model.entity;
 
 public class WashpayerInfo {
     int id;

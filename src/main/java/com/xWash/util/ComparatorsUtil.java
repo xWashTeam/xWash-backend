@@ -1,7 +1,6 @@
 package com.xWash.util;
 
-import com.xWash.entity.QueryResult;
-import org.springframework.stereotype.Component;
+import com.xWash.model.entity.QueryResult;
 
 import java.util.Comparator;
 import java.util.Map;

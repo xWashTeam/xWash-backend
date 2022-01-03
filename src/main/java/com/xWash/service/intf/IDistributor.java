@@ -1,13 +1,7 @@
-package com.xWash.service;
+package com.xWash.service.intf;
 
 
 import cn.hutool.json.JSONObject;
-import com.xWash.entity.QueryResult;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 public interface IDistributor {
     void queryByJsonString(String name, String jsonStr);

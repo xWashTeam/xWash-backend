@@ -2,10 +2,10 @@ package com.xWash.service.Impl;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.xWash.entity.MStatus;
-import com.xWash.service.IChecker;
-import com.xWash.entity.QueryResult;
-import com.xWash.service.IDistributor;
+import com.xWash.model.entity.MStatus;
+import com.xWash.service.intf.IChecker;
+import com.xWash.model.entity.QueryResult;
+import com.xWash.service.intf.IDistributor;
 import com.xWash.util.RedisUtil;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;

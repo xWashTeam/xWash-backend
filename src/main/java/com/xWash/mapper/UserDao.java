@@ -1,7 +1,6 @@
-package com.xWash.dao;
+package com.xWash.mapper;
 
-import com.xWash.entity.Record;
-import org.apache.ibatis.annotations.Select;
+import com.xWash.model.dao.Record;
 
 import java.util.ArrayList;
 import java.util.List;

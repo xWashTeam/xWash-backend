@@ -1,6 +1,6 @@
-package com.xWash.dao;
+package com.xWash.mapper;
 
-import com.xWash.entity.WashpayerInfo;
+import com.xWash.model.entity.WashpayerInfo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

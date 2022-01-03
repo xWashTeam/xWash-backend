@@ -1,7 +1,7 @@
 package com.xWash.aspect;
 
-import com.xWash.dao.UserDao;
-import com.xWash.entity.Record;
+import com.xWash.mapper.UserDao;
+import com.xWash.model.dao.Record;
 import com.xWash.util.CookieUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,7 +24,7 @@ public class CookiesAspect {
 
     Logger logger = LogManager.getLogger("sqlLog");
 
-    @Pointcut("execution(* com.xWash.admin.CheckController.getMachineStatus(..))")
+    @Pointcut("execution(* com.xWash.controller.CheckController.getMachineStatus(..))")
     private void pt4checkController() {
     }
 

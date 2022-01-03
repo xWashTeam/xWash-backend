@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xWash.dao.FeedbackDao">
+<mapper namespace="com.xWash.mapper.FeedbackDao">
 
     <select id="getAll" resultType="java.util.ArrayList">
         select * from feedback;
     </select>
 
-    <select id="getTextById" resultType="com.xWash.entity.Feedback">
+    <select id="getTextById" resultType="com.xWash.model.dao.Feedback">
         select * from feedback where id= #{id} ;
     </select>
 
-    <select id="getTextByOwner" resultType="com.xWash.entity.Feedback">
+    <select id="getTextByOwner" resultType="com.xWash.model.dao.Feedback">
         select * from feedback where owner= #{owner} ;
     </select>
 
-    <insert id="saveFeedback" parameterType="com.xWash.entity.Feedback">
+    <insert id="saveFeedback" parameterType="com.xWash.model.dao.Feedback">
         insert into feedback(text,name,receiveTime)values(#{text},#{name},#{receiveTime});
     </insert>
 

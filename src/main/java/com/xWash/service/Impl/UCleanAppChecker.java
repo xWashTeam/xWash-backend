@@ -5,9 +5,9 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.xWash.entity.MStatus;
-import com.xWash.entity.QueryResult;
-import com.xWash.service.IChecker;
+import com.xWash.model.entity.MStatus;
+import com.xWash.model.entity.QueryResult;
+import com.xWash.service.intf.IChecker;
 import org.springframework.stereotype.Service;
 
 @Service("uCleanAppChecker")

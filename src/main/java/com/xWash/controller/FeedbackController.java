@@ -1,10 +1,10 @@
-package com.xWash.admin;
+package com.xWash.controller;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.xWash.dao.FeedbackDao;
-import com.xWash.entity.APIResult;
-import com.xWash.entity.Feedback;
+import com.xWash.mapper.FeedbackDao;
+import com.xWash.model.entity.APIResult;
+import com.xWash.model.dao.Feedback;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

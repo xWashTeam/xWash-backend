@@ -1,6 +1,6 @@
 package com.xWash.aspect;
 
-import com.xWash.entity.QueryResult;
+import com.xWash.model.entity.QueryResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class CheckerAspect {
     final Logger logger = LogManager.getLogger("checkerLog");
 
-    @Pointcut("execution(* com.xWash.service.IChecker.checkByQrLink(..))")
+    @Pointcut("execution(* com.xWash.service.intf.IChecker.checkByQrLink(..))")
     public void netRequest() { }
 
     @Around(value = "netRequest()")
