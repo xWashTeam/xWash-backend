@@ -3,32 +3,35 @@ package com.xWash.service.Impl;
 import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
+import com.xWash.model.dao.Machine;
 import com.xWash.model.entity.MStatus;
+import com.xWash.model.entity.MessageEnum;
 import com.xWash.model.entity.QueryResult;
 import com.xWash.service.intf.IChecker;
 import org.springframework.stereotype.Service;
 
 @Service("zhuamChecker")
 public class ZhuamChecker implements IChecker {
-    private final static int timeout = 5000;
-    private final static String url = "http://zhua.myclassphp.com/index.php?m=Home&c=User&a=getIndexData";
-    private final JSONObject postBody;
+    private static final int timeout = 5000;
+    private static final int ZHUAM_AVAILABLE = 1;
+    private static final int ZHUAM_USING = 0;
+    private static final String url = "http://zhua.myclassphp.com/index.php?m=Home&c=User&a=getIndexData";
+    private final JSON postBody;
 
     {
-        postBody = JSONUtil.parseObj("{\"uid\":\"831342\", \"merid\":\"251181\"}");
+        postBody = (JSON) JSON.parse("{\"uid\":\"831342\", \"merid\":\"251181\"}");
     }
 
     @Override
-    public QueryResult checkByQrLink(String qrLink) {
-
+    public QueryResult check(Machine machine) {
+        String link = machine.getLink();
         QueryResult qs = new QueryResult();
         HttpResponse res = null;
-        JSONObject jo = null;
+        JSON jo = null;
         try {
-            res = getResponse(qrLink);
-            jo = JSONUtil.parseObj(res.body());
+            res = getResponse(link);
+            jo = (JSON) JSON.parse(res.body());
         } catch (HttpException e) {
             // TODO log
             return qs;
@@ -41,18 +44,18 @@ public class ZhuamChecker implements IChecker {
             case 200:
                 // 通过status设置
                 Integer status = (Integer) jo.get("status");
-                if (status.equals(1)) {
+                if (status.equals(ZHUAM_AVAILABLE)) {
                     qs.setStatus(MStatus.AVAILABLE);
-                } else if (status == 0) {
+                } else if (status == ZHUAM_USING) {
                     qs.setStatus(MStatus.USING);
-                    qs.setMessage("已被使用");
+                    qs.setMessage(MessageEnum.MESSAGE_USING);
                 }else{
                     qs.setStatus(MStatus.UNKNOWN);
                 }
                 break;
             case 401:
                 qs.setStatus(MStatus.UNKNOWN);
-                qs.setMessage("权限过期，请联系管理员");
+                qs.setMessage(MessageEnum.MESSAGE_UNAUTH);
                 break;
         }
         return qs;

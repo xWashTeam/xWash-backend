@@ -1,24 +1,10 @@
-package com.xWash.util;
-
-import com.xWash.model.entity.QueryResult;
+package com.xWash.model.entity;
 
 import java.util.Comparator;
 import java.util.Map;
 
-public class ComparatorsUtil {
-
-    public static Comparator<Map.Entry<String, QueryResult>> getComparator(String name) {
-        switch (name) {
-            case "d19":
-                return d19Comparator;
-            case "xi1":
-            case "xi2":
-                return xi1Comparator;
-        }
-        return null;
-    }
-
-    private final static Comparator<Map.Entry<String, QueryResult>> d19Comparator = new Comparator<Map.Entry<String, QueryResult>>() {
+public class LocationComparator {
+    public static final Comparator<Map.Entry<String, QueryResult>> d19Comparator = new Comparator<Map.Entry<String, QueryResult>>() {
         @Override
         public int compare(Map.Entry<String, QueryResult> e1, Map.Entry<String, QueryResult> e2) {
             /**
@@ -40,7 +26,7 @@ public class ComparatorsUtil {
         }
     };
 
-    private final static Comparator<Map.Entry<String, QueryResult>> xi1Comparator = new Comparator<Map.Entry<String, QueryResult>>() {
+    public static final Comparator<Map.Entry<String, QueryResult>> xi1Comparator = new Comparator<Map.Entry<String, QueryResult>>() {
         @Override
         public int compare(Map.Entry<String, QueryResult> e1, Map.Entry<String, QueryResult> e2) {
             /**
@@ -60,5 +46,4 @@ public class ComparatorsUtil {
             return delta;
         }
     };
-
 }

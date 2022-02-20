@@ -7,10 +7,10 @@ public class Record {
     String cookie;
     String building;
     String mode;
-    Date date;
+    Date createdTime;
 
     public Record(){
-        date = new Date();
+        createdTime = new Date();
         mode = "normal";
     }
 
@@ -21,7 +21,7 @@ public class Record {
                 ", cookie='" + cookie + '\'' +
                 ", building='" + building + '\'' +
                 ", mode='" + mode + '\'' +
-                ", date=" + date +
+                ", date=" + createdTime +
                 '}';
     }
 
@@ -57,11 +57,11 @@ public class Record {
         this.building = building;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCreatedTime() {
+        return createdTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
     }
 }

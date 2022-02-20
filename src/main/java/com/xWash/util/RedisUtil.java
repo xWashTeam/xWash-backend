@@ -5,7 +5,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
-
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -13,9 +12,8 @@ import java.util.Map;
 
 @Component
 public class RedisUtil {
-
     @Autowired
-    Jedis jedis;
+    private Jedis jedis;
     @Autowired
     @Resource(name = "redisTemplate")
     private RedisTemplate<String, String> redisTemplate;
@@ -49,8 +47,6 @@ public class RedisUtil {
         ValueOperations<String , String > vo = redisTemplate.opsForValue();
         return vo.get(key);
     }
-
-
 
     public static String decodeUTF8Str(String xStr) throws UnsupportedEncodingException {
         return URLDecoder.decode(xStr.replaceAll("\\\\x", "%"), "utf-8");
