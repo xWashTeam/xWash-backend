@@ -1,6 +1,5 @@
 package com.xWash.service.Impl;
 
-import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
@@ -8,13 +7,12 @@ import cn.hutool.json.JSONUtil;
 import com.xWash.model.dao.Machine;
 import com.xWash.model.entity.MStatus;
 import com.xWash.model.entity.QueryResult;
-import com.xWash.service.intf.IChecker;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service("mplinkChecker")
-public class MplinkChecker extends AbstractChecker{
+public class MplinkChecker extends AbstractChecker {
     private final static int timeout = 10000;
     private final static String url = "http://view.mplink.cn/ajax/GetDeviceStatus.ashx?deviceID=";
 

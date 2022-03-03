@@ -6,6 +6,7 @@ import com.xWash.util.RedisUtil;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 
 @Service("distributor")

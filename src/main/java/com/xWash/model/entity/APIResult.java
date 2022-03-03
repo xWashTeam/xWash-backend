@@ -5,24 +5,25 @@ public class APIResult {
     private String message;
     private Object data;
 
-    public static APIResult createOnlyCode(int code){
+    public static APIResult createOnlyCode(int code) {
         APIResult apiResult = new APIResult();
         apiResult.setCode(code);
         return apiResult;
     }
 
-    public static APIResult createWithMsg(int code,String msg){
+    public static APIResult createWithMsg(int code, String msg) {
         APIResult apiResult = createOnlyCode(code);
         apiResult.setMessage(msg);
         return apiResult;
     }
-    public static APIResult createWithData(int code,Object data){
+
+    public static APIResult createWithData(int code, Object data) {
         APIResult apiResult = createOnlyCode(code);
         apiResult.setData(data);
         return apiResult;
     }
 
-    public static APIResult createWithDataAndMsg(int code,String msg, Object data){
+    public static APIResult createWithDataAndMsg(int code, String msg, Object data) {
         APIResult withMsg = createWithMsg(code, msg);
         withMsg.setData(data);
         return withMsg;

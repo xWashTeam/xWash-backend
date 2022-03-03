@@ -7,21 +7,23 @@ public class QueryResult implements Serializable {
     private static final Date initDate = new Date(1);   // 用于表示没有成功更新状态
     private static final QueryResult emptyInstance = new QueryResult();
 
-    private String name="";
-    private MStatus status=MStatus.INIT;
-    private int remainTime=0;
-    private String location="";
+    private String name = "";
+    private MStatus status = MStatus.INIT;
+    private int remainTime = 0;
+    private String location = "";
     Date date = initDate;  // 最后更新状态的时间
     private String message = "";
 
 
-    public static QueryResult getEmptyInstance(){
+    public static QueryResult getEmptyInstance() {
         return emptyInstance;
     }
 
-    public boolean isNormal(){return status == MStatus.AVAILABLE || status == MStatus.USING ;}
+    public boolean isNormal() {
+        return status == MStatus.AVAILABLE || status == MStatus.USING;
+    }
 
-    public boolean isInit(){
+    public boolean isInit() {
         return status == MStatus.INIT;
     }
 
@@ -48,8 +50,8 @@ public class QueryResult implements Serializable {
     public String toJson() {
         return "{" +
                 "\"name\":\"" + name + '\"' +
-                ",\"status\":\"" + status + "\""+
-                ",\"location\":\"" + location + "\""+
+                ",\"status\":\"" + status + "\"" +
+                ",\"location\":\"" + location + "\"" +
                 ",\"message\":\"" + message + '\"' +
                 ",\"timestamp\":\"" + date.getTime() + '\"' +
                 ",\"date\":\"" + date.toString() + '\"' +

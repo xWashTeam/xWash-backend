@@ -46,8 +46,8 @@ public class CheckController {
         JSONObject resJson = new JSONObject(true);
         map.entrySet().stream()
                 .sorted(building.equals("d19") ? LocationComparator.d19Comparator : LocationComparator.xi1Comparator)
-                .forEach(entry->{
-                    resJson.set(entry.getKey(),JSONUtil.parseObj(entry.getValue().toJson()));
+                .forEach(entry -> {
+                    resJson.set(entry.getKey(), JSONUtil.parseObj(entry.getValue().toJson()));
                 });
         mv.setViewName("api");
         return APIResult.createWithData(200, resJson);

@@ -9,8 +9,10 @@ import java.util.ArrayList;
 public interface UserMapper {
     @Select("SELECT * FROM user")
     ArrayList<User> listUsers();
+
     @Insert("INSERT INTO user(cookie) VALUES(#{cookie})")
     void addUser(String cookie);
+
     @Select("SELECT * FROM user WHERE cookie=#{cookie}")
     User getUserByCookie(String cookie);
 }

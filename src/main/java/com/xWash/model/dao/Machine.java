@@ -14,13 +14,13 @@ public class Machine {
     @Override
     public String toString() {
         return "Building{" +
-            "id=" + id +
-            ", name='" + name + '\'' +
-            ", machineId='" + machineId + '\'' +
-            ", location='" + location + '\'' +
-            ", belong='" + belong + '\'' +
-            ", link='" + link + '\'' +
-            '}';
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", machineId='" + machineId + '\'' +
+                ", location='" + location + '\'' +
+                ", belong='" + belong + '\'' +
+                ", link='" + link + '\'' +
+                '}';
     }
 
     public int getId() {

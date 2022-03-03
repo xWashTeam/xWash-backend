@@ -10,17 +10,20 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public abstract class  AbstractChecker {
+public abstract class AbstractChecker {
     @Autowired
     protected RedisUtil redisUtil;
 
     // key in redis
     protected String authKey = "";
+
     protected String getToken() {
         return redisUtil.getStr_Str(authKey);
     }
 
     protected abstract HttpResponse request(Machine machine) throws IOException;
+
     protected abstract QueryResult extract(HttpResponse response) throws IOException;
+
     public abstract QueryResult check(Machine machine);
 }

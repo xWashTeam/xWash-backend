@@ -9,7 +9,7 @@ public class Record {
     String mode;
     Date createdTime;
 
-    public Record(){
+    public Record() {
         createdTime = new Date();
         mode = "normal";
     }

@@ -15,11 +15,11 @@ public interface MachineMapper {
     LinkedList<Machine> getMachinesByBuilding(String building);
 
     @Update(value = "UPDATE machine" +
-        " SET machine_id=#{machineId}, location=#{location}, belong=#{belong}, link=#{link}, building=#{building}" +
-        " WHERE name=#{name}")
+            " SET machine_id=#{machineId}, location=#{location}, belong=#{belong}, link=#{link}, building=#{building}" +
+            " WHERE name=#{name}")
     boolean updateMachineByName(Machine machine);
 
     @Insert(value = "INSERT INTO machine(name, machine_id, location, belong, link, building)" +
-        " VALUES(#{name}, #{machineId}, #{location}, #{belong}, #{link}, #{building})")
+            " VALUES(#{name}, #{machineId}, #{location}, #{belong}, #{link}, #{building})")
     boolean save(Machine machine);
 }

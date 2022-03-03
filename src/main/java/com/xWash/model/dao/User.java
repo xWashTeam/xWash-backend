@@ -6,8 +6,8 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-            "cookie='" + cookie + '\'' +
-            '}';
+                "cookie='" + cookie + '\'' +
+                '}';
     }
 
     public String getCookie() {
