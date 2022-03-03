@@ -13,13 +13,9 @@ public class JsonTest {
     @Autowired
     MysqlUtil mysqlUtil;
 
-    @Test
-    public void updateBuilding() {
-        mysqlUtil.updateBuildings();
-    }
 
     @Test
     public void testParseArray() {
-        mysqlUtil.insertBuildings();
+        mysqlUtil.updateBuildings();
     }
 }

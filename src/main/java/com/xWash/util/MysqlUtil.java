@@ -19,14 +19,7 @@ public class MysqlUtil {
     }
 
     public void updateBuildings() {
-        File file = new File(System.getProperty("user.dir") + "/data/machines.json");
-        String machinesStr = FileUtil.readUtf8String(file);
-        List<Machine> machines = JSON.parseArray(machinesStr, Machine.class);
-        machines.forEach(machineMapper::updateMachineByName);
-    }
-
-    public void insertBuildings() {
-        File file = new File(System.getProperty("user.dir") + "/data/machines.json");
+        File file = new File("/var/lib/xwash/machines.json");
         String machinesStr = FileUtil.readUtf8String(file);
         List<Machine> machines = JSON.parseArray(machinesStr, Machine.class);
         machines.forEach(machineMapper::save);

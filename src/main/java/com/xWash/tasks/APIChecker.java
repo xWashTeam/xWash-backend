@@ -44,6 +44,6 @@ public class APIChecker {
 
     @PostConstruct
     public void initData() {
-//        mysqlUtil.updateAllBuildings();
+        mysqlUtil.updateBuildings();
     }
 }

@@ -20,6 +20,7 @@ public interface MachineMapper {
     boolean updateMachineByName(Machine machine);
 
     @Insert(value = "INSERT INTO machine(name, machine_id, location, belong, link, building)" +
-            " VALUES(#{name}, #{machineId}, #{location}, #{belong}, #{link}, #{building})")
+            " VALUES(#{name}, #{machineId}, #{location}, #{belong}, #{link}, #{building})" +
+            " ON DUPLICATE KEY UPDATE machine_id=#{machineId}, location=#{location}, belong=#{belong}, link=#{link}, building=#{building}")
     boolean save(Machine machine);
 }

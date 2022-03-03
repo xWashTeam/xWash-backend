@@ -38,7 +38,7 @@ DROP TABLE IF EXISTS `machine`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `machine` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL UNIQUE,
   `building` varchar(100) NOT NULL,
   `machine_id` varchar(100),
   `location` varchar(100) NOT NULL,
