@@ -19,6 +19,20 @@
 -- Table structure for table `building`
 --
 
+DROP TABLE IF EXISTS `building`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `building` (
+                           `id` int NOT NULL AUTO_INCREMENT,
+                           `enable` int NOT NULL,
+                           PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `building`
+--
+
 DROP TABLE IF EXISTS `machine`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;

@@ -57,7 +57,7 @@
   },
   {
     "name": "d19_E_5.5",
-    "belong": "uCleanChecker",
+    "belong": "uCleanAppChecker",
     "location": "东十九东边5.5楼",
     "building": "d19",
     "link": "https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176798"
