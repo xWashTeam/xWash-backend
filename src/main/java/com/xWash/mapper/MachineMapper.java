@@ -5,17 +5,20 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public interface MachineMapper {
     @Select(value = "SELECT * FROM machine")
-    ArrayList<Machine> listMachines();
+    LinkedList<Machine> listMachines();
+
     @Select(value = "SELECT * FROM machine WHERE building=#{building}")
-    Machine getMachineByBuilding(String building);
+    LinkedList<Machine> getMachinesByBuilding(String building);
+
     @Update(value = "UPDATE machine" +
-        " SET machineId=#{machineId}, location=#{location}, belong=#{belong}, link=#{link}, building=#{building}" +
+        " SET machine_id=#{machineId}, location=#{location}, belong=#{belong}, link=#{link}, building=#{building}" +
         " WHERE name=#{name}")
     boolean updateMachineByName(Machine machine);
+
     @Insert(value = "INSERT INTO machine(name, machine_id, location, belong, link, building)" +
         " VALUES(#{name}, #{machineId}, #{location}, #{belong}, #{link}, #{building})")
     boolean save(Machine machine);

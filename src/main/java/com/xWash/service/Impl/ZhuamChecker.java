@@ -1,76 +1,69 @@
 package com.xWash.service.Impl;
 
-import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
-import com.alibaba.fastjson.JSON;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.xWash.model.dao.Machine;
 import com.xWash.model.entity.MStatus;
-import com.xWash.model.entity.MessageEnum;
 import com.xWash.model.entity.QueryResult;
-import com.xWash.service.intf.IChecker;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 @Service("zhuamChecker")
-public class ZhuamChecker implements IChecker {
+public class ZhuamChecker extends AbstractChecker {
     private static final int timeout = 5000;
     private static final int ZHUAM_AVAILABLE = 1;
     private static final int ZHUAM_USING = 0;
     private static final String url = "http://zhua.myclassphp.com/index.php?m=Home&c=User&a=getIndexData";
-    private final JSON postBody;
+    private static final Map<String, Object> params = new HashMap<>();
 
     {
-        postBody = (JSON) JSON.parse("{\"uid\":\"831342\", \"merid\":\"251181\"}");
+        params.put("uid", "831342");
     }
 
     @Override
-    public QueryResult check(Machine machine) {
-        String link = machine.getLink();
-        QueryResult qs = new QueryResult();
-        HttpResponse res = null;
-        JSON jo = null;
-        try {
-            res = getResponse(link);
-            jo = (JSON) JSON.parse(res.body());
-        } catch (HttpException e) {
-            // TODO log
-            return qs;
-        } catch (Exception e) {
-            // TODO log
-            return qs;
-        }
+    protected HttpResponse request(Machine machine) throws IOException {
+        params.put("merid", machine.getMachineId());
+        return HttpRequest.post(url)
+                .form(params)
+                .timeout(timeout)
+                .execute();
+    }
 
-        switch (res.getStatus()) {
-            case 200:
-                // 通过status设置
-                Integer status = (Integer) jo.get("status");
-                if (status.equals(ZHUAM_AVAILABLE)) {
-                    qs.setStatus(MStatus.AVAILABLE);
-                } else if (status == ZHUAM_USING) {
-                    qs.setStatus(MStatus.USING);
-                    qs.setMessage(MessageEnum.MESSAGE_USING);
-                }else{
-                    qs.setStatus(MStatus.UNKNOWN);
-                }
+    @Override
+    protected QueryResult extract(HttpResponse response) throws IOException {
+        String res = response.body();
+        QueryResult qs = new QueryResult();
+        JSONObject json = JSONUtil.parseObj(res);
+        int status = json.getInt("status");
+        switch (status) {
+            case ZHUAM_AVAILABLE:
+                qs.setStatus(MStatus.AVAILABLE);
                 break;
-            case 401:
+            case ZHUAM_USING:
+                qs.setStatus(MStatus.USING);
+                break;
+            default:
                 qs.setStatus(MStatus.UNKNOWN);
-                qs.setMessage(MessageEnum.MESSAGE_UNAUTH);
-                break;
         }
         return qs;
     }
 
     @Override
-    public HttpResponse getResponse(String qrLink) {
-        String body, merid = qrLink.substring(40);  // api不变，这样最快
-        synchronized (postBody) {
-            postBody.set("merid", merid);
-            body = postBody.toString();
+    public QueryResult check(Machine machine) {
+        HttpResponse response = null;
+        try {
+            response = request(machine);
+            // TODO aspect log if code != 200
+            return extract(response);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return HttpRequest.post(url)
-                .body(body)
-                .timeout(timeout)
-                .execute();
+        return null;
     }
 }

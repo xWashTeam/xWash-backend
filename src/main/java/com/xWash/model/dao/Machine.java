@@ -1,5 +1,7 @@
 package com.xWash.model.dao;
 
+import com.xWash.model.entity.Belong;
+
 public class Machine {
     int id;
     String name;
