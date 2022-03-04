@@ -1,7 +1,9 @@
 package com.xWash.service.Impl;
 
+import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import cn.hutool.json.JSONException;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.xWash.model.dao.Machine;
@@ -18,7 +20,7 @@ public class MplinkChecker extends AbstractChecker {
 
 
     @Override
-    protected HttpResponse request(Machine machine) throws IOException {
+    protected HttpResponse request(Machine machine) throws IORuntimeException {
         String link = machine.getLink();
         String id = link.substring(link.indexOf('=') + 1);
         return HttpRequest
@@ -28,7 +30,7 @@ public class MplinkChecker extends AbstractChecker {
     }
 
     @Override
-    protected QueryResult extract(HttpResponse response) throws IOException {
+    protected QueryResult extract(HttpResponse response) throws JSONException {
         QueryResult qr = new QueryResult();
         String text = response.body();
         JSONObject json = JSONUtil.parseObj(text.substring(1, text.length() - 1));
@@ -60,14 +62,4 @@ public class MplinkChecker extends AbstractChecker {
         return qr;
     }
 
-    @Override
-    public QueryResult check(Machine machine) {
-        try {
-            HttpResponse response = request(machine);
-            return extract(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

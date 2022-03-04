@@ -1,7 +1,9 @@
 package com.xWash.service.Impl;
 
+import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import cn.hutool.json.JSONException;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.xWash.model.dao.Machine;
@@ -22,7 +24,7 @@ public class UCleanAppChecker extends AbstractChecker {
 
 
     @Override
-    protected HttpResponse request(Machine machine) throws IOException {
+    protected HttpResponse request(Machine machine) throws IORuntimeException {
         JSONObject json = new JSONObject();
         json.putOnce("qrCode", machine.getLink());
         return HttpRequest
@@ -34,7 +36,7 @@ public class UCleanAppChecker extends AbstractChecker {
     }
 
     @Override
-    protected QueryResult extract(HttpResponse response) throws IOException {
+    protected QueryResult extract(HttpResponse response) throws JSONException {
         QueryResult qr = new QueryResult();
         JSONObject json = JSONUtil.parseObj(response.body());
         Boolean available = (Boolean) json.getByPath("data.result.createOrderEnabled");
@@ -52,14 +54,4 @@ public class UCleanAppChecker extends AbstractChecker {
         return qr;
     }
 
-    @Override
-    public QueryResult check(Machine machine) {
-        try {
-            HttpResponse response = request(machine);
-            return extract(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

@@ -1,7 +1,9 @@
 package com.xWash.service.Impl;
 
+import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import cn.hutool.json.JSONException;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.xWash.model.dao.Machine;
@@ -49,7 +51,7 @@ public class WashpayerChecker extends AbstractChecker {
     }
 
     @Override
-    protected HttpResponse request(Machine machine) throws IOException {
+    protected HttpResponse request(Machine machine) throws IORuntimeException {
         String devNo = getDevNo(machine);
         JSONObject body = (JSONObject) JSONUtil.parse("{\n" +
                 "  \"devNo\": \"" + devNo + "\",\n" +
@@ -68,7 +70,7 @@ public class WashpayerChecker extends AbstractChecker {
     }
 
     @Override
-    protected QueryResult extract(HttpResponse response) throws IOException {
+    protected QueryResult extract(HttpResponse response) throws JSONException {
         JSONObject body = JSONUtil.parseObj(response.body());
         QueryResult qr = new QueryResult();
         qr.setStatus(body.getInt("result").equals(999) ? MStatus.AVAILABLE : MStatus.USING);

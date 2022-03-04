@@ -1,7 +1,9 @@
 package com.xWash.service.Impl;
 
+import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import cn.hutool.json.JSONException;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.xWash.model.dao.Machine;
@@ -27,7 +29,7 @@ public class ZhuamChecker extends AbstractChecker {
     }
 
     @Override
-    protected HttpResponse request(Machine machine) throws IOException {
+    protected HttpResponse request(Machine machine) throws IORuntimeException {
         params.put("merid", machine.getMachineId());
         return HttpRequest.post(url)
                 .form(params)
@@ -36,7 +38,7 @@ public class ZhuamChecker extends AbstractChecker {
     }
 
     @Override
-    protected QueryResult extract(HttpResponse response) throws IOException {
+    protected QueryResult extract(HttpResponse response) throws JSONException {
         String res = response.body();
         QueryResult qs = new QueryResult();
         JSONObject json = JSONUtil.parseObj(res);
@@ -52,18 +54,5 @@ public class ZhuamChecker extends AbstractChecker {
                 qs.setStatus(MStatus.UNKNOWN);
         }
         return qs;
-    }
-
-    @Override
-    public QueryResult check(Machine machine) {
-        HttpResponse response = null;
-        try {
-            response = request(machine);
-            // TODO aspect log if code != 200
-            return extract(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
