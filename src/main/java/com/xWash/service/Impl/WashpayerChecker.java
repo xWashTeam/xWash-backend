@@ -28,7 +28,9 @@ public class WashpayerChecker extends AbstractChecker {
 
     private final static String URL = "https://www.washpayer.com/user/startAction";
     private final static int TIMEOUT = 10000;
+    private final static String DEV_NO_COOKIE_NAME = "user_dev_no";
     private final static String STARTKEY = "ojqSxwAC-NiAEMqO3asVzc0CO6OI-1630153349410-11770";  // 不知道这参数是干啥的，但是不可或缺
+    private final static String USER_AGENT = "Mozilla/5.0 (Linux; Android 12; MI 8 Build/SQ1D.211205.016.A1; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/86.0.4240.99 XWEB/3185 MMWEBSDK/20211202 Mobile Safari/537.36 MMWEBID/8395 MicroMessenger/8.0.18.2060(0x28001257) Process/toolsmp WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64";  // 不知道这参数是干啥的，但是不可或缺
 
     {
         authKey = "washpayer";
@@ -37,9 +39,13 @@ public class WashpayerChecker extends AbstractChecker {
     private String requestDevNo(String link) {
         HttpResponse response = HttpRequest
                 .get(link)
+                .header("user-agent", USER_AGENT)
                 .cookie(getToken())
                 .execute();
-        return response.getCookieValue("user_dev_no");
+        if (response.getCookie(DEV_NO_COOKIE_NAME) == null) {
+            throw new RuntimeException("Cookie not found");
+        }
+        return response.getCookieValue(DEV_NO_COOKIE_NAME);
     }
 
     private String getDevNo(Machine machine) {
