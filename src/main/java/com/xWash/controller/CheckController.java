@@ -22,8 +22,6 @@ import java.util.Map;
 @RestController
 @RequestMapping(path = "/api", method = {RequestMethod.GET, RequestMethod.POST})
 public class CheckController {
-
-
     @Autowired
     Distributor distributor;
     @Autowired
