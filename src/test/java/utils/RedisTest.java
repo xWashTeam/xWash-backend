@@ -16,6 +16,6 @@ public class RedisTest {
 
     @Test
     public void testParseArray() {
-        redisUtil.setStr_Str("ucleanapp", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA2NjM4NDIsIm5hbWUiOiIxMzAyNTE2MDAzNiIsImFwcFVzZXJJZCI6Im9neVJUMXU4bkxRWGMwOHJia05kTjlqOUlMOUkiLCJpYXQiOjE2NDYyOTk1ODUsImV4cCI6MTY1NDMzNDc4NX0.eh539ieGFgtEeJvB364bkaabWV81rgGSHDsFqmFswRc");
+        redisUtil.setStr_Str("washpayer", "");
     }
 }
