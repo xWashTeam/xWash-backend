@@ -1,19 +1,23 @@
 package com.xWash.service.Impl;
 
 import cn.hutool.core.io.IORuntimeException;
+import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONException;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import cn.hutool.socket.SocketRuntimeException;
 import com.xWash.model.dao.Machine;
 import com.xWash.model.entity.MStatus;
+import com.xWash.model.entity.MessageEnum;
 import com.xWash.model.entity.QueryResult;
 import com.xWash.util.MysqlUtil;
 import com.xWash.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.io.IOException;
+
+import java.net.SocketTimeoutException;
 
 @Service("washpayerChecker")
 public class WashpayerChecker extends AbstractChecker {
@@ -24,7 +28,6 @@ public class WashpayerChecker extends AbstractChecker {
 
     private final static String URL = "https://www.washpayer.com/user/startAction";
     private final static int TIMEOUT = 10000;
-    private static final String USER_AGENT = "Mozilla/5.0 (Linux; Android 10; MI 8 Build/QKQ1.190828.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045713 Mobile Safari/537.36 MMWEBID/8395 MicroMessenger/8.0.10.1960(0x28000A31) Process/tools WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64";
     private final static String STARTKEY = "ojqSxwAC-NiAEMqO3asVzc0CO6OI-1630153349410-11770";  // 不知道这参数是干啥的，但是不可或缺
 
     {
@@ -35,14 +38,13 @@ public class WashpayerChecker extends AbstractChecker {
         HttpResponse response = HttpRequest
                 .get(link)
                 .cookie(getToken())
-                .header("user-agent", USER_AGENT)
                 .execute();
         return response.getCookieValue("user_dev_no");
     }
 
     private String getDevNo(Machine machine) {
         String devNo = redisUtil.hashGet("devno", machine.getName());
-        if ( devNo != null) {
+        if (devNo != null) {
             return devNo;
         }
         devNo = requestDevNo(machine.getLink());
@@ -60,10 +62,9 @@ public class WashpayerChecker extends AbstractChecker {
                 "    \"startKey\": \"" + STARTKEY + "\",\n" +
                 "  }\n" +
                 "}\n");
-        // TODO focus on timeout
         return HttpRequest
-                .get(URL)
-                .cookie(getToken())
+                .post(URL)
+                .cookie("jwt_auth_domain=MyUser " + getToken())
                 .timeout(TIMEOUT)
                 .body(body.toString())
                 .execute();
@@ -73,19 +74,32 @@ public class WashpayerChecker extends AbstractChecker {
     protected QueryResult extract(HttpResponse response) throws JSONException {
         JSONObject body = JSONUtil.parseObj(response.body());
         QueryResult qr = new QueryResult();
+        if (body.get("result") == null) {
+            throw new JSONException("Filed result not found");
+        }
         qr.setStatus(body.getInt("result").equals(999) ? MStatus.AVAILABLE : MStatus.USING);
         return qr;
     }
 
     @Override
     public QueryResult check(Machine machine) {
-        return new QueryResult();
-//        try {
-//            HttpResponse response = request(machine);
-//            return extract(response);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
+        QueryResult qr = new QueryResult();
+        try {
+            HttpResponse response = request(machine);
+            qr = extract(response);
+        } catch (IORuntimeException | HttpException e) {
+            if (e.getCause() instanceof SocketRuntimeException
+            || e.getCause() instanceof SocketTimeoutException) {
+                qr.setStatus(MStatus.USING);
+            } else {
+                qr.setStatus(MStatus.UNKNOWN);
+                qr.setMessage(MessageEnum.MESSAGE_UNKNOWN);
+            }
+        } catch (JSONException e) {
+            qr.setStatus(MStatus.UNKNOWN);
+            qr.setMessage(MessageEnum.MESSAGE_JSON_PARSE_EXCEPTION);
+        }
+
+        return qr;
     }
 }

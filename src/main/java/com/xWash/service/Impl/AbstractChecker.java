@@ -1,6 +1,7 @@
 package com.xWash.service.Impl;
 
 import cn.hutool.core.io.IORuntimeException;
+import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONException;
 import com.xWash.model.dao.Machine;
@@ -34,7 +35,7 @@ public abstract class AbstractChecker {
         HttpResponse response = null;
         try {
             response = request(machine);
-        } catch (IORuntimeException e) {
+        } catch (IORuntimeException | HttpException e) {
             qr.setStatus(MStatus.UNKNOWN);
             if (e.getCause() instanceof SocketTimeoutException) {
                 qr.setMessage(MessageEnum.MESSAGE_NETWORK_TIMEOUT);
