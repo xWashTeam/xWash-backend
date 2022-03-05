@@ -1,5 +1,6 @@
 package com.xWash.tasks;
 
+import com.alibaba.fastjson.JSON;
 import com.xWash.model.dao.Machine;
 import com.xWash.model.entity.QueryResult;
 import com.xWash.service.Impl.Distributor;
@@ -36,7 +37,7 @@ public class APIChecker {
     @Scheduled(cron = "0/30 * * * * ?")
     public void checkFromAPI() {
         // TODO separate machines by building
-        redisUtil.setStr_Str("date", new Date().toString());
+        redisUtil.setStr("date", new Date().toString());
         LinkedList<Machine> machines = mysqlUtil.listMachines();
 
         // TODO thread pool
@@ -48,7 +49,7 @@ public class APIChecker {
                     if (qr.isInit()) {
                         return;
                     }
-                    redisUtil.hashSet(machine.getBuilding(), machine.getName(), qr.toString());
+                    redisUtil.hashSet(machine.getBuilding(), machine.getName(), JSON.toJSONString(qr));
                 }
             });
         });

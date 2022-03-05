@@ -1,56 +1,47 @@
 package com.xWash.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import javax.annotation.Resource;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Map;
 
 @Component
 public class RedisUtil {
     @Autowired
-    private Jedis jedis;
-    @Autowired
-    @Resource(name = "redisTemplate")
-    private RedisTemplate<String, String> redisTemplate;
+    JedisPool jedisPool;
 
-    public boolean hashExist(String key) {
-        return redisTemplate.hasKey(key);
+    public boolean exist(String key) {
+        Jedis jedis = jedisPool.getResource();
+        return jedis.exists(key);
     }
 
-    public Map hashGetAll(String key) {
-        return redisTemplate.opsForHash().entries(key);
+    public Map<String, String> hashGetAll(String key) {
+        Jedis jedis = jedisPool.getResource();
+        return jedis.hgetAll(key);
     }
 
     public String hashGet(String key, String field) {
-        return (String) redisTemplate.opsForHash().get(key, field);
+        Jedis jedis = jedisPool.getResource();
+        return jedis.hget(key, field);
     }
 
-    public void hashSet(String key, String field, Object value) {
-        redisTemplate.opsForHash().put(key, field, value);
+    public void hashSet(String key, String field, String value) {
+        Jedis jedis = jedisPool.getResource();
+        jedis.hset(key, field, value);
     }
 
-    public void hashRemove(String key, String field) {
-        redisTemplate.opsForHash().delete(key, field);
+    public void setStr(String key, String value) {
+        Jedis jedis = jedisPool.getResource();
+        jedis.set(key, value);
     }
 
-    public void setStr_Str(String key, String value) {
-        ValueOperations<String, String> vo = redisTemplate.opsForValue();
-        vo.set(key, value);
+    public String getStr(String key) {
+        Jedis jedis = jedisPool.getResource();
+        return jedis.get(key);
     }
-
-    public String getStr_Str(String key) {
-        ValueOperations<String, String> vo = redisTemplate.opsForValue();
-        return vo.get(key);
-    }
-
-    public static String decodeUTF8Str(String xStr) throws UnsupportedEncodingException {
-        return URLDecoder.decode(xStr.replaceAll("\\\\x", "%"), "utf-8");
-    }
-
 }

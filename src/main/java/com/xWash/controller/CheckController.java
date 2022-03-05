@@ -2,10 +2,8 @@ package com.xWash.controller;
 
 
 import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import com.xWash.model.entity.APIResult;
 import com.xWash.model.entity.LocationComparator;
-import com.xWash.model.entity.QueryResult;
 import com.xWash.service.Impl.Distributor;
 import com.xWash.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +32,18 @@ public class CheckController {
             , @CookieValue(value = "user", defaultValue = "") String userCookie
             , HttpSession session, HttpServletResponse response, HttpServletRequest request) throws IOException {
         ModelAndView mv = new ModelAndView();
-        if (!redisUtil.hashExist(building)) {
+        if (!redisUtil.exist(building)) {
             session.setAttribute("msg", "没有找到" + building);
             response.sendError(404);
             mv.setViewName("404");
             return APIResult.createOnlyCode(404);
         }
-        Map<String, QueryResult> map = redisUtil.hashGetAll(building);
+        Map<String, String> map = redisUtil.hashGetAll(building);
         JSONObject resJson = new JSONObject(true);
         map.entrySet().stream()
                 .sorted(building.equals("d19") ? LocationComparator.d19Comparator : LocationComparator.xi1Comparator)
                 .forEach(entry -> {
-                    resJson.set(entry.getKey(), JSONUtil.parseObj(entry.getValue().toJson()));
+                    resJson.set(entry.getKey(), entry.getValue());
                 });
         mv.setViewName("api");
         return APIResult.createWithData(200, resJson);

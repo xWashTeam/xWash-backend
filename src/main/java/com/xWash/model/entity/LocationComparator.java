@@ -4,9 +4,9 @@ import java.util.Comparator;
 import java.util.Map;
 
 public class LocationComparator {
-    public static final Comparator<Map.Entry<String, QueryResult>> d19Comparator = new Comparator<Map.Entry<String, QueryResult>>() {
+    public static final Comparator<Map.Entry<String, String>> d19Comparator = new Comparator<Map.Entry<String, String>>() {
         @Override
-        public int compare(Map.Entry<String, QueryResult> e1, Map.Entry<String, QueryResult> e2) {
+        public int compare(Map.Entry<String, String> e1, Map.Entry<String, String> e2) {
             /**
              * d19 json中key的格式为：d19_方向(E | W)_楼层（1.5 | 2.5 | ...）
              * 排序目的要让东边排在前
@@ -26,9 +26,9 @@ public class LocationComparator {
         }
     };
 
-    public static final Comparator<Map.Entry<String, QueryResult>> xi1Comparator = new Comparator<Map.Entry<String, QueryResult>>() {
+    public static final Comparator<Map.Entry<String, String>> xi1Comparator = new Comparator<Map.Entry<String, String>>() {
         @Override
-        public int compare(Map.Entry<String, QueryResult> e1, Map.Entry<String, QueryResult> e2) {
+        public int compare(Map.Entry<String, String> e1, Map.Entry<String, String> e2) {
             /**
              * xi1 json中key的格式为：xi1_方向(E | W)_楼层.号数（1.1 | 2.2 | ...）
              * */

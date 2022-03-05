@@ -23,7 +23,7 @@ public abstract class AbstractChecker {
     protected String authKey = "";
 
     protected String getToken() {
-        return redisUtil.getStr_Str(authKey);
+        return redisUtil.getStr(authKey);
     }
 
     protected abstract HttpResponse request(Machine machine) throws IORuntimeException;
