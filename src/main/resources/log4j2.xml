@@ -1,31 +1,31 @@
 <Configuration status="INFO" monitorInterval="300">
     <properties>
-        <property name="LOG_HOME">${sys:user.home}/logs/</property>
+        <property name="LOG_HOME">/var/log/xwash</property>
     </properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
         <RollingRandomAccessFile name="checker"
-                                 fileName="${LOG_HOME}/checker.log"
-                                 filePattern="${LOG_HOME}/check/$${date:yyyy-MM}/checkLog-%d{yyyy-MM-dd HH-mm}-%i.log">
+                                 fileName="${LOG_HOME}/checker/checker.log"
+                                 filePattern="${LOG_HOME}/checker/$${date:yyyy-MM}/checkLog-%d{yyyy-MM-dd HH-mm}-%i.log">
             <PatternLayout
-                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} \n %msg%n" />
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} \n %msg%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1440" />
-                <SizeBasedTriggeringPolicy size="50 MB" />
+                <TimeBasedTriggeringPolicy interval="1440"/>
+                <SizeBasedTriggeringPolicy size="50 MB"/>
             </Policies>
-            <DefaultRolloverStrategy max="20" />
+            <DefaultRolloverStrategy max="20"/>
         </RollingRandomAccessFile>
 
     </Appenders>
 
     <Loggers>
         <Logger name="checker" level="info" additivity="false">
-            <AppenderRef ref="checker" />
+            <AppenderRef ref="checker"/>
         </Logger>
         <Root level="error">
-            <AppenderRef ref="Console" />
+            <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
 </Configuration>

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import java.util.*;
 
@@ -38,6 +37,9 @@ public class APIChecker {
         // TODO thread pool
         machines.forEach(machine -> {
             QueryResult qr = distributor.check(machine);
+            if (!qr.isNormal()) {
+                return;
+            }
             redisUtil.hashSet(machine.getBuilding(), machine.getName(), qr.toString());
         });
     }

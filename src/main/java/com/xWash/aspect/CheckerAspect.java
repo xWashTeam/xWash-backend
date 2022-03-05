@@ -1,9 +1,7 @@
 package com.xWash.aspect;
 
-import cn.hutool.core.io.IORuntimeException;
-import cn.hutool.http.HttpResponse;
 import com.xWash.model.dao.Machine;
-import com.xWash.model.entity.MessageEnum;
+import com.xWash.model.entity.MStatus;
 import com.xWash.model.entity.QueryResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,10 +13,14 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component("checkerAspect")
 public class CheckerAspect {
-    final Logger logger = LogManager.getLogger("checkerLog");
+    final Logger logger = LogManager.getLogger("checker");
 
     @Pointcut("execution(* com.xWash.service.Impl.AbstractChecker.check(..))")
-    public void checkPoint() {
+    public void commonCheckerPoint() {
+    }
+
+    @Pointcut("execution(* com.xWash.service.Impl.WashpayerChecker.check(..))")
+    public void washpayerCheckerPoint() {
     }
 
     /**
@@ -27,7 +29,7 @@ public class CheckerAspect {
      * @param jp
      * @return
      */
-    @Around(value = "checkPoint()")
+    @Around(value = "commonCheckerPoint() && washpayerCheckerPoint()")
     public Object aroundRequest(ProceedingJoinPoint jp) {
         Machine machine = (Machine) (jp.getArgs()[0]);
         QueryResult qr = new QueryResult();
@@ -37,8 +39,9 @@ public class CheckerAspect {
                 logger.warn(machine.getName() + ": " + qr.getMessage());
             }
         } catch (Exception e) {
-            logger.error(machine.getName() + ": " + e.getCause());
-            logger.error(e.getMessage());
+            qr.setStatus(MStatus.UNKNOWN);
+            qr.setMessage(String.valueOf(e.getMessage()));
+            logger.error(machine.getName() + " -> error: {}", e.getMessage(), e);
         } finally {
             return qr;
         }
