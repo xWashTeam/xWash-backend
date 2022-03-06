@@ -11,7 +11,7 @@ public interface UserMapper {
     ArrayList<User> listUsers();
 
     @Insert("INSERT INTO user(cookie) VALUES(#{cookie})")
-    void addUser(String cookie);
+    void addUser(User user);
 
     @Select("SELECT * FROM user WHERE cookie=#{cookie}")
     User getUserByCookie(String cookie);

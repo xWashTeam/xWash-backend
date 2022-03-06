@@ -13,7 +13,7 @@ public interface RecordMapper {
     @Select("SELECT * FROM record WHERE cookie=#{cookie}")
     List<Record> getRecordsByCookie(String cookie);
 
-    @Insert("INSERT INTO record(cookie, building, date, mode)" +
-            " VALUES(#{cookie}, #{building}, #{date}, #{mode})")
+    @Insert("INSERT INTO record(cookie, building, created_time, mode)" +
+            " VALUES(#{cookie}, #{building}, #{createdTime}, #{mode})")
     boolean save(Record record);
 }

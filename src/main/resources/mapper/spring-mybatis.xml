@@ -52,16 +52,20 @@
         <property name="configLocation" value="classpath:mapper/mybatis-config.xml"/>
     </bean>
 
-    <!--配置userMapper对象-->
+    <!--Mappers-->
     <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="mapperInterface" value="com.xWash.mapper.UserMapper"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
-    <!--配置BuildingMapper对象-->
+
     <bean id="machineMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="mapperInterface" value="com.xWash.mapper.MachineMapper"/>
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
+    <bean id="recordMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="com.xWash.mapper.RecordMapper"/>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
 
 </beans>
