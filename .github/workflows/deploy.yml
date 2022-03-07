@@ -30,7 +30,7 @@ jobs:
       - name: Send war to vps
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: /home/runner/work/xWash-backend/xWash-backend/target/xWash.war
+          local: "./target/xWash.war"
           remote: ${{ secrets.REMOTE }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
