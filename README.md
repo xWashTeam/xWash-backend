@@ -1,6 +1,11 @@
 # xWash-backend
 xWash应用的后端
 
+## 部署
+1. 修改`jdbc.properties`与`docker-compose.yml`中MySQL的密码
+2. `mvn package`，docker volumes会自动挂载target目录到tomcat中
+3. `docker-compose up -d`
+
 # 技术栈
 
 `Java 1.8`
@@ -9,30 +14,26 @@ xWash应用的后端
 
 `Redis`
 
-# 运行流程
+# 项目流程
 
-### 整体流程
+## 整体流程
 
 ![main.png (1369×781) (raw.githubusercontent.com)](https://raw.githubusercontent.com/wulnm/img/master/main.png)
 
-### 请求API流程
+## 请求API流程
 
 ![APIChecker.png (1369×781) (raw.githubusercontent.com)](https://raw.githubusercontent.com/wulnm/img/master/APIChecker.png)
 
-# 文件结构
+# 支持的洗衣机牌子
+1. U净网页端与APP端
+2. Washpayer
+3. Zhuam
+4. Mplink
+5. Sodalife(苏打校园，因为学校已经没有了，无法测试因此废弃)
 
-`com.xWash.admin `存放Controller
+# 注意事项
+### 密码设置
+在`src/main/resources/mapper/jdbc.properties`中需要添加MySQL的密码，需要和`docker-compose.yml`中一致。
 
-`com.xWash.entity` 存放Model
-
-`com.xWash.service` 存放业务层代码
-
-`com.xWash.service.Impl`
-	├── Distributor.java   ---  分发器, 将宿舍楼不同类型洗衣机分发给不同Checker
-	├── LocationDealer.java   ---  添加返回接口中的位置信息
-	├── SodaChecker.java   ---  苏打校园Checker (现废弃)
-	├── UCleanAPPChecker.java   ---  U净APP Checker
-	└── UCleanChecker.java   ---  U净微信扫码 Checker
-
-`com.xWash.tasks` 存放定时任务
-
+### 错误日志
+`/var/log/xwash`

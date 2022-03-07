@@ -24,3 +24,4 @@ services:
     volumes:
       - "./target/:/usr/local/tomcat/webapps/"
       - "./data/machine/:/var/lib/xwash/"
+      - "/var/log/xwash/:/var/log/xwash/"
