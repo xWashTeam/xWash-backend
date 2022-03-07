@@ -15,6 +15,11 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+CREATE DATABASE `xwash` DEFAULT CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
+
+use xwash;
+
 --
 -- Table structure for table `building`
 --
@@ -59,7 +64,7 @@ CREATE TABLE `record` (
   `id` int NOT NULL AUTO_INCREMENT,
   `cookie` varchar(255) NOT NULL,
   `building` varchar(20) NOT NULL,
-  `date` datetime DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
   `mode` varchar(10) DEFAULT 'normal',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

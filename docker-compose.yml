@@ -2,13 +2,11 @@ version: "1.0"
 services:
   mysql:
     restart: always
-    image: mysql:8.0.22
+    image: mysql:8.0.25
     volumes:
-      - "./data:/var/lib/xwash/data"
+      - "./data/sql:/docker-entrypoint-initdb.d/"
     environment:
       MYSQL_ROOT_PASSWORD: c%>PQ799@!
-#    command:
-#      - bash -c "bash /var/lib/xwash/data/init.sh"
     ports:
       - "3306:3306"
 
@@ -17,3 +15,12 @@ services:
     image: redis
     ports:
       - "13579:6379"
+
+  tomcat:
+    restart: always
+    image: tomcat:9
+    ports:
+      - "8088:8080"
+    volumes:
+      - "./target/:/usr/local/tomcat/webapps/"
+      - "./data/machine/:/var/lib/xwash/"
