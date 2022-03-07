@@ -2,6 +2,7 @@ package com.xWash.controller;
 
 
 import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.xWash.model.entity.APIResult;
 import com.xWash.model.entity.LocationComparator;
 import com.xWash.service.Impl.Distributor;
@@ -43,7 +44,7 @@ public class CheckController {
         map.entrySet().stream()
                 .sorted(building.equals("d19") ? LocationComparator.d19Comparator : LocationComparator.xi1Comparator)
                 .forEach(entry -> {
-                    resJson.set(entry.getKey(), entry.getValue());
+                    resJson.set(entry.getKey(), JSONUtil.parse(entry.getValue()));
                 });
         mv.setViewName("api");
         return APIResult.createWithData(200, resJson);

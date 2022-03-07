@@ -49,7 +49,7 @@ public class APIChecker {
                     if (qr.isInit()) {
                         return;
                     }
-                    redisUtil.hashSet(machine.getBuilding(), machine.getName(), JSON.toJSONString(qr));
+                    redisUtil.hashSet(machine.getBuilding(), machine.getName(), qr.toJson());
                 }
             });
         });
