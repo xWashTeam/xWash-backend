@@ -3,9 +3,9 @@ name: Deploy
 on:
   push:
     # 分支
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   compile:
@@ -30,7 +30,7 @@ jobs:
         uses: garygrossgarten/github-action-scp@release
         with:
           local: target/xWash.war
-          remote: /home/ubuntu/xWash/
+          remote: ${{ secrets.REMOTE }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
