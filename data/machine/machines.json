@@ -1,0 +1,278 @@
+[
+  {
+    "name": "d19_E_1.5",
+    "building": "d19",
+    "belong": "uCleanAppChecker",
+    "location": "东十九东边1.5楼",
+    "link": "http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555201809040059546"
+  },
+  {
+    "name": "d19_W_1.5",
+    "building": "d19",
+    "belong": "uCleanAppChecker",
+    "location": "东十九西边1.5楼",
+    "link": "http://app.littleswan.com/u_download.html?type=Ujing&uuid=0000000000000A0007604202011190000976"
+  },
+  {
+    "name": "d19_E_2.5",
+    "building": "d19",
+    "belong": "uCleanChecker",
+    "location": "东十九东边2.5楼",
+    "link": "https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176799"
+  },
+  {
+    "name": "d19_W_2.5",
+    "belong": "uCleanAppChecker",
+    "building": "d19",
+    "location": "东十九西边2.5楼",
+    "link": "http://app.littleswan.com/u_download.html?type=Ujing&uuid=0000000000000A0007604202011190001378"
+  },
+  {
+    "name": "d19_E_3.5",
+    "belong": "uCleanChecker",
+    "building": "d19",
+    "location": "东十九东边3.5楼",
+    "link": "https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176727"
+  },
+  {
+    "name": "d19_W_3.5",
+    "belong": "uCleanChecker",
+    "location": "东十九西边3.5楼",
+    "building": "d19",
+    "link": "https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170175473"
+  },
+  {
+    "name": "d19_E_4.5",
+    "belong": "uCleanAppChecker",
+    "location": "东十九东边4.5楼",
+    "link": "http://app.littleswan.com/u_download.html?type=Ujing&uuid=0000000000000A0007604202011190001038",
+    "building": "d19"
+  },
+  {
+    "name": "d19_W_4.5",
+    "belong": "uCleanAppChecker",
+    "location": "东十九西边4.5楼",
+    "building": "d19",
+    "link": "http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555201809040059169"
+  },
+  {
+    "name": "d19_E_5.5",
+    "belong": "uCleanAppChecker",
+    "location": "东十九东边5.5楼",
+    "building": "d19",
+    "link": "https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176798"
+  },
+  {
+    "name": "d19_W_5.5",
+    "belong": "uCleanAppChecker",
+    "location": "东十九西边5.5楼",
+    "link": "http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555202101100166240",
+    "building": "d19"
+  },
+  {
+    "name": "d19_E_6.5",
+    "belong": "uCleanChecker",
+    "location": "东十九东边6.5楼",
+    "building": "d19",
+    "link": "https://q.ujing.com.cn/ucqrc/index.html?cd=0000000000000A0007555202104170176797"
+  },
+  {
+    "name": "d19_W_6.5",
+    "belong": "uCleanAppChecker",
+    "location": "东十九西边6.5楼",
+    "link": "http://app.littleswan.com/u_download.html?type=Ujing& uuid=0000000000000A0007555202102270169223",
+    "building": "d19"
+  },
+  {
+    "name": "xi1_W_1.1",
+    "building": "xi1",
+    "machineId": "308442",
+    "location": "西一1楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=308442"
+  },
+  {
+    "name": "xi1_W_1.2",
+    "building": "xi1",
+    "machineId": "G370205",
+    "location": "西一1楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=G370205"
+  },
+  {
+    "name": "xi1_W_2.1",
+    "building": "xi1",
+    "machineId": "500213",
+    "location": "西一2楼",
+    "belong": "zhuamChecker",
+    "link": "http://zhuam.myclassphp.com?machineCode=500213"
+  },
+  {
+    "name": "xi1_W_2.2",
+    "building": "xi1",
+    "machineId": "30036137",
+    "location": "西一2楼",
+    "belong": "mplinkChecker",
+    "link": "http://view.mplink.cn/Pay/Home.aspx?deviceid=ea85348b-6dce-49e0-bd05-8a628e0089f6"
+  },
+  {
+    "name": "xi1_W_3.1",
+    "building": "xi1",
+    "machineId": "500130",
+    "location": "西一3楼",
+    "belong": "zhuamChecker",
+    "link": "http://zhuam.myclassphp.com?machineCode=500130"
+  },
+  {
+    "name": "xi1_W_3.2",
+    "building": "xi1",
+    "machineId": "26351",
+    "location": "西一3楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=26351"
+  },
+  {
+    "name": "xi1_W_4.1",
+    "building": "xi1",
+    "machineId": "251181",
+    "location": "西一4楼",
+    "belong": "zhuamChecker",
+    "link": "http://zhuam.myclassphp.com?machineCode=251181"
+  },
+  {
+    "name": "xi1_W_4.2",
+    "building": "xi1",
+    "machineId": "217513",
+    "location": "西一4楼",
+    "belong": "zhuamChecker",
+    "link": "http://zhuam.myclassphp.com?machineCode=217531"
+  },
+  {
+    "name": "xi1_W_5.1",
+    "building": "xi1",
+    "machineId": "30040354",
+    "location": "西一5楼",
+    "belong": "mplinkChecker",
+    "link": "http://view.mplink.cn/Pay/Home.aspx?deviceid=438bda4e-cb4f-4430-bd99-79c006ef0685"
+  },
+  {
+    "name": "xi1_W_5.2",
+    "building": "xi1",
+    "machineId": "26365",
+    "location": "西一5楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=26365"
+  },
+  {
+    "name": "xi1_W_6.1",
+    "building": "xi1",
+    "machineId": "250153",
+    "location": "西一6楼",
+    "belong": "zhuamChecker",
+    "link": "http://zhuam.myclassphp.com?machineCode=250153"
+  },
+  {
+    "name": "xi1_W_6.2",
+    "building": "xi1",
+    "machineId": "250157",
+    "location": "西一6楼",
+    "belong": "zhuamChecker",
+    "link": "http://zhuam.myclassphp.com?machineCode=250157"
+  },
+  {
+    "name": "xi2_E_1.1",
+    "building": "xi2",
+    "machineId": "G370236",
+    "location": "西二1楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=G370236"
+  },
+  {
+    "name": "xi2_E_1.2",
+    "machineId": "G355719",
+    "location": "西二1楼",
+    "belong": "washpayerChecker",
+    "building": "xi2",
+    "link": "https://www.washpayer.com/userLogin?l=G355719"
+  },
+  {
+    "name": "xi2_E_2.1",
+    "building": "xi2",
+    "machineId": 308249,
+    "location": "西二2楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=308249"
+  },
+  {
+    "name": "xi2_E_2.2",
+    "building": "xi2",
+    "machineId": 103986,
+    "location": "西二2楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=103986"
+  },
+  {
+    "name": "xi2_E_3.1",
+    "building": "xi2",
+    "machineId": 36129,
+    "location": "西二3楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=36129"
+  },
+  {
+    "name": "xi2_E_3.2",
+    "building": "xi2",
+    "machineId": 35107,
+    "location": "西二3楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=35107"
+  },
+  {
+    "name": "xi2_E_4.1",
+    "building": "xi2",
+    "machineId": 23579,
+    "location": "西二4楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=23579"
+  },
+  {
+    "name": "xi2_E_4.2",
+    "building": "xi2",
+    "machineId": 101053,
+    "location": "西二4楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=101053"
+  },
+  {
+    "name": "xi2_E_5.1",
+    "building": "xi2",
+    "machineId": 23009,
+    "location": "西二5楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=23009"
+  },
+  {
+    "name": "xi2_E_5.2",
+    "building": "xi2",
+    "machineId": 103980,
+    "location": "西二5楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=103980"
+  },
+  {
+    "name": "xi2_E_6.1",
+    "building": "xi2",
+    "machineId": 102783,
+    "location": "西二6楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=102783"
+  },
+  {
+    "name": "xi2_E_6.2",
+    "building": "xi2",
+    "machineId": 101125,
+    "location": "西二6楼",
+    "belong": "washpayerChecker",
+    "link": "https://www.washpayer.com/userLogin?l=101125"
+  }
+]

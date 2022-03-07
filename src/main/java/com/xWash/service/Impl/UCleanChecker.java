@@ -1,52 +1,50 @@
 package com.xWash.service.Impl;
-import cn.hutool.http.HttpException;
+import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
-import cn.hutool.json.*;
-import com.xWash.service.IChecker;
-import com.xWash.entity.QueryResult;
-import com.xWash.entity.MStatus;
+import cn.hutool.json.JSONException;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.xWash.model.dao.Machine;
+import com.xWash.model.entity.MStatus;
+import com.xWash.model.entity.QueryResult;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service("uCleanChecker")
-public class UCleanChecker implements IChecker{
+public class UCleanChecker extends AbstractChecker{
 
-    private int timeout = 2000;
-    private String hostUrl = "https://u.zhinengxiyifang.cn/api/Devices";
-    private String para1="?filter={\"where\":{\"qrCode\":\"";
-    private String para2="\",\"isRemoved\":false},\"scope\":{\"fields\":[\"virtualId\",\"scanSelfClean\",\"hasAutoLaunchDevice\",\"autoLaunchDeviceOutOfStock\",\"isSlotMachine\",\"deviceTypeId\",\"online\",\"status\",\"boxTypeId\",\"sn\"]},\"include\":[{\"relation\":\"store\",\"scope\":{\"fields\":[\"isRemoved\",\"enable\"]}}]}";
+    private static final int timeout = 2000;
+    private static final String UCLEAN_AVAILABLE = "0";
+    private static final String UCLEAN_USING = "1";
+    private final String url = "https://u.zhinengxiyifang.cn/api/Devices";
+    private final String para1="?filter={\"where\":{\"qrCode\":\"";
+    private final String para2="\",\"isRemoved\":false},\"scope\":{\"fields\":[\"virtualId\",\"scanSelfClean\",\"hasAutoLaunchDevice\",\"autoLaunchDeviceOutOfStock\",\"isSlotMachine\",\"deviceTypeId\",\"online\",\"status\",\"boxTypeId\",\"sn\"]},\"include\":[{\"relation\":\"store\",\"scope\":{\"fields\":[\"isRemoved\",\"enable\"]}}]}";
 
-    public QueryResult checkByQrLink(String qrLink) throws HttpException {
-        return dealWithResponse(getResponse(qrLink).body());
+    @Override
+    protected HttpResponse request(Machine machine) throws IORuntimeException {
+        return HttpRequest.get(url + para1 + machine.getLink() + para2)
+                .timeout(timeout)
+                .execute();
     }
 
-    public HttpResponse getResponse(String qrLink) {
-        return HttpRequest.get(hostUrl + para1+qrLink+para2).timeout(timeout).execute();
-    }
-
-    private QueryResult dealWithResponse(String response){
-        // 对返回的字符串进行处理
-        QueryResult queryResult = new QueryResult();
-        try {
-            JSONObject jo = null;
-            response = response.substring(1,response.length()-1); // 去除左右中括号
-            jo = JSONUtil.parseObj(response);
-            queryResult.setName((String) jo.get("readableName"));
-            queryResult.setRemainTime((Integer) jo.get("remainTime"));
-            String s = (String) jo.get("status");
-            if(s.equals("0"))
-                queryResult.setStatus(MStatus.AVAILABLE);
-            else if(s.equals("1"))
-                queryResult.setStatus(MStatus.USING);
-            else
-                queryResult.setStatus(MStatus.UNKNOWN);
-        }catch (Exception e){
-            queryResult.setStatus(MStatus.UNKNOWN);
-            queryResult.setMessage("故障中...");
-        }finally {
-            return queryResult;
+    @Override
+    protected QueryResult extract(HttpResponse response) throws JSONException {
+        String body = response.body();
+        JSONObject json = JSONUtil.parseObj(body.substring(1, body.length() - 1));
+        QueryResult qs = new QueryResult();
+        qs.setName(json.getStr("readableName"));
+        qs.setRemainTime(json.getInt("remainTime"));
+        String status = json.getStr("status");
+        if (status.equals(UCLEAN_AVAILABLE)) {
+            qs.setStatus(MStatus.AVAILABLE);
+        } else if (status.equals(UCLEAN_USING)) {
+            qs.setStatus(MStatus.USING);
+        } else {
+            qs.setStatus(MStatus.UNKNOWN);
         }
+        return qs;
     }
 
 }

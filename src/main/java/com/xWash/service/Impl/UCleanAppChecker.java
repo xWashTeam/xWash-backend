@@ -1,50 +1,57 @@
 package com.xWash.service.Impl;
 
-import cn.hutool.http.HttpException;
+import cn.hutool.core.io.IORuntimeException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import cn.hutool.json.JSONException;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.xWash.entity.MStatus;
-import com.xWash.entity.QueryResult;
-import com.xWash.service.IChecker;
+import com.xWash.model.dao.Machine;
+import com.xWash.model.entity.MStatus;
+import com.xWash.model.entity.QueryResult;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service("uCleanAppChecker")
-public class UCleanAppChecker implements IChecker {
-    private int timeout = 2000;
-    private String host = "https://phoenix.ujing.online:443/api/v1/devices/scanWasherCode";
-    private String Authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA2NjM4NDIsIm5hbWUiOiIxMzAyNTE2MDAzNiIsImFwcFVzZXJJZCI6MTI2OTcxNzksImlhdCI6MTYyOTc5NjgzMCwiZXhwIjoxNjM3ODMyMDMwfQ.jamr9UUU6tYJafj-HsYa5zng7pY8ah7qquumxn_ltII";
+public class UCleanAppChecker extends AbstractChecker {
+    private int TIMEOUT = 2000;
+    private String URL = "https://phoenix.ujing.online:443/api/v1/devices/scanWasherCode";
+
+    {
+        authKey = "ucleanapp";
+    }
+
 
     @Override
-    public HttpResponse getResponse(String qrLink){
-        JSONObject jo = new JSONObject();
-        jo.putOnce("qrCode",qrLink);
-        return HttpRequest.post(host).timeout(timeout).header("Authorization",Authorization).body(String.valueOf(jo))
+    protected HttpResponse request(Machine machine) throws IORuntimeException {
+        JSONObject json = new JSONObject();
+        json.putOnce("qrCode", machine.getLink());
+        return HttpRequest
+                .post(URL)
+                .timeout(TIMEOUT)
+                .header("Authorization", getToken())
+                .body(String.valueOf(json))
                 .execute();
     }
 
     @Override
-    public QueryResult checkByQrLink(String qrLink) throws HttpException {
-        JSONObject resJson = JSONUtil.parseObj(getResponse(qrLink).body());
-        return dealWithResponse(resJson);
-    }
-
-    public QueryResult dealWithResponse(JSONObject resJson){
+    protected QueryResult extract(HttpResponse response) throws JSONException {
         QueryResult qr = new QueryResult();
-        Boolean available = (Boolean) resJson.getByPath("data.result.createOrderEnabled");
-        if (available){
+        JSONObject json = JSONUtil.parseObj(response.body());
+        Boolean available = (Boolean) json.getByPath("data.result.createOrderEnabled");
+        if (available) {
             qr.setStatus(MStatus.AVAILABLE);
-        }else{
-            String reason = (String) resJson.getByPath("data.result.reason");
-            qr.setMessage(reason);
-            if((int) resJson.getByPath("data.result.status") == 1 ){
-                qr.setStatus(MStatus.USING);
-            }else{
-                qr.setStatus(MStatus.UNKNOWN);
-            }
+            return qr;
         }
-        qr.setRemainTime(-1);
+        String reason = (String) json.getByPath("data.result.reason");
+        qr.setMessage(reason);
+        if ((int) json.getByPath("data.result.status") == 1) {
+            qr.setStatus(MStatus.USING);
+        } else {
+            qr.setStatus(MStatus.UNKNOWN);
+        }
         return qr;
     }
+
 }
