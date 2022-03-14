@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Add mysql password into jdbc.properties
-        - run |
+        run: |
           echo ${{ MYSQL_PASSWORD }} >> src/main/resources/mapper/jdbc.properties
       - name: Setup Java JDK
         uses: actions/setup-java@v3.0.0
